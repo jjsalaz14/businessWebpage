@@ -1,0 +1,30 @@
+.navbar
+  @each $name, $pair in $colors
+    $color: nth($pair, 1)
+    $color-invert: nth($pair, 2)
+    &.is-#{$name}
+      .navbar-brand
+        & a.navbar-item,
+        .navbar-link
+          &:hover,
+          &.is-active
+            background-color: darken($color, 5%)
+            color: $color-invert
+        .navbar-link
+          &::after
+            border-color: $color-invert
+      +desktop
+        .navbar-start,
+        .navbar-end
+          & .navbar-item,
+          .navbar-link
+            color: $color-invert
+          & a.navbar-item,
+          .navbar-link
+            &:hover,
+            &.is-active
+              background-color: darken($color, 5%)
+              color: $color-invert
+          .navbar-link
+            &::after
+              border-color: $color-invert
