@@ -1,15 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app"> 
+    <img class= "car-logo" src="../src/assets/truck-logo.jpg" width="100" height="100"/>
+    <p class="phone"> (760) 123-4567</p>
+    <div class="shop-name">
+      <p> Texano Tire Shop</p>
+    </div>
     <div class="navbar">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
-          <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link>
+          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link>  
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
-            </div>
           </div>
         </div>
       </div>
@@ -25,6 +27,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import Login from "@/components/Login.vue";
+
 @Component({
   components: {
     Signup,
@@ -34,6 +37,7 @@ import Login from "@/components/Login.vue";
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
+
   showSignupModal() {
     this.showSignup = true;
   }
@@ -64,4 +68,31 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+.car-logo {
+  float: left;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.phone {
+  float: right;
+  padding-top: 45px;
+  padding-right: 20px;
+}
+
+.shop-name {
+  padding-top: 25px;
+  font-size: 200%;
+  padding-left: 120px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.navbar {
+  padding-top: .1px;
+  background-color: hsl(217, 71%, 53%);
+  font-weight: bold;
+}
+
+
 </style>
