@@ -25,5 +25,20 @@ export class About {
 
   @Column()
   public suHours!: string;
+
+  @Column()
+  public phoneNumber!: string;
+
+  @Column()
+  public street!: string;
+
+  @Column()
+  public city!: string;
+
+  @Column()
+  public stateName!: string;
+
+  @Column()
+  public zipcode!: string;
   
 }

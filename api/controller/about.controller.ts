@@ -19,31 +19,6 @@ export class AboutController extends DefaultController {
           res.status(200).send(about);
         })
       });
-    // router.route("/about/:id")
-    //   .put((req: Request, res: Response) => {
-    //     aboutRepo.findOne(req.params.id).then((foundAbout: About | undefined) => {
-    //       if (foundAbout == undefined) {
-    //         res.sendStatus(404);
-    //         return;
-    //       }
-
-    //       foundAbout.mHours = req.body.mHours;
-    //       foundAbout.tHours = req.body.tHours;
-    //       foundAbout.wHours = req.body.wHours;
-    //       foundAbout.rHours = req.body.rHours;
-    //       foundAbout.fHours = req.body.fHours;
-    //       foundAbout.saHours = req.body.saHours;
-    //       foundAbout.suHours = req.body.suHours;
-
-
-    //       aboutRepo.save(foundAbout).then((updatedAbout: About) => {
-    //         console.log(updatedAbout)
-    //         res.status(200).send(updatedAbout);
-    //       });
-    //     });
-    //   });
-
-
 
     return router;
   }

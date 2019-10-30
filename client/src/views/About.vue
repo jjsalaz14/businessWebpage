@@ -1,9 +1,20 @@
 <template>
   <div class="about">
   <div class="content hours">
+    <h1> Contact Information: </h1>
     <article v-for="(a, index) in about" v-bind:key="index">
-      <div>
-        <p>Business Hours: </p>
+      <div class="phone-address">
+        <p><u>Phone Number</u>: <br/>
+          {{a.phoneNumber}}
+          <br/>
+          <br/>
+          <u>Address</u>: <br/>
+          {{a.street}} <br/>
+          {{a.city}}, {{a.stateName}} {{a.zipcode}} <br/>
+        </p>
+      </div>
+      <div class="hours">
+        <div> <u>Business Hours</u>: </div>
         <div>Monday: {{a.mHours}}</div>
         <div>Tuesday: {{a.tHours}}</div>
         <div>Wednesday: {{a.wHours}} </div>
@@ -11,6 +22,9 @@
         <div>Friday: {{a.fHours}}</div>
         <div>Saturday: {{a.saHours}}</div>
         <div>Sunday: {{a.suHours}}</div>
+      </div>
+      <div class="map">
+        <img src="../assets/map.png">
       </div>
     </article>
   </div>
@@ -55,3 +69,25 @@ export default class About extends Vue {
   }
 }
 </script>
+
+
+<style scoped>
+
+.content {
+  padding-top: 50px;
+  padding-left: 35px;
+}
+
+.phone-address {
+  float: left;
+}
+.hours {
+  float: left;
+  padding-left: 70px;
+}
+.map {
+  width: 500px;
+  float: left;
+  padding-left: 150px;
+}
+</style>
