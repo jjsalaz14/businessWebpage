@@ -1,7 +1,9 @@
 <template>
   <div id="app"> 
-    <img class= "car-logo" src="../src/assets/truck-logo.jpg" width="100" height="100"/>
-    <p class="phone"> (760) 123-4567</p>
+    <article v-for="(a, index) in about" v-bind:key="index">
+      <img class= "car-logo" src="../src/assets/truck-logo.jpg" width="100" height="100"/>
+      <p class="phone"> {{a.phoneNumber}}</p>
+    </article>
     <div class="shop-name">
       <p> Texano Tire Shop</p>
     </div>
@@ -28,6 +30,9 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import Login from "@/components/Login.vue";
+import { iAbout } from "../src/models/about.interface";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { APIConfig } from "../src/utils/api.utils";
 
 @Component({
   components: {
@@ -38,6 +43,32 @@ import Login from "@/components/Login.vue";
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
+
+  error: string | boolean = false;
+  about: iAbout[] = [];
+
+  created() {
+    this.getAllAbout();
+  }
+
+  getAllAbout() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/"), {
+        headers: {
+          token: this.$store.state.userToken
+        }
+      })
+      .then((response: AxiosResponse) => {
+        this.about = response.data;
+        console.log(response.data);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log(this.error);
+      });
+  }
 
   showSignupModal() {
     this.showSignup = true;
@@ -57,6 +88,7 @@ export default class App extends Vue {
   cancelLogin() {
     this.showLogin = false;
   }
+  
 }
 </script>
 

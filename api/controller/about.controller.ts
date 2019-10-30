@@ -17,8 +17,16 @@ export class AboutController extends DefaultController {
         console.log("retrieving about information");
         aboutRepo.find().then((about: About[]) => {
           res.status(200).send(about);
+      })
+    });
+
+    router.route("/")
+      .get((req: Request, res: Response) => {
+        console.log("retrieving phone information");
+        aboutRepo.find().then((about: About[]) => {
+          res.status(200).send(about);
         })
-      });
+    });
 
     return router;
   }
