@@ -11,4 +11,4 @@ use dev;
 -- "8 AM - 5 PM", "8 AM - 5 PM", "8 AM - 4 PM", "Closed", "(760)123-4567", "123 Main Street", "City Name",
 -- "California", "12345");
 
--- select * from about;
+select * from about;
