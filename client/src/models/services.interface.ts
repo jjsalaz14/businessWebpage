@@ -1,6 +1,6 @@
-export interface iAbout {
-    title: string,
-    price: string,
-    description: string,
+export interface iServices {
     id: number
+    seTitle: string,
+    sePrice: string,
+    seDescription: string,
   }

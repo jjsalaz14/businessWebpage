@@ -10,7 +10,6 @@ import { getRepository } from "typeorm";
 
 export class ServicesController extends DefaultController {
   protected initializeRoutes(): express.Router {
-    console.log("inside services controller");
     const router = express.Router();
     const servicesRepo = getRepository(Services);
     router.route("/services")

@@ -6,10 +6,10 @@ export class Services {
   public id!: number;
 
   @Column()
-  public sePrice!: number;
+  public seTitle!: string;
 
   @Column()
-  public seTitle!: string;
+  public sePrice!: number;
 
   @Column()
   public seDescription!: string;
