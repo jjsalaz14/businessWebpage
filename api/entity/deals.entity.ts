@@ -9,7 +9,7 @@ export class Deals {
   public title!: string;
 
   @Column()
-  public expiration!: number;
+  public expiration!: string;
 
   @Column()
   public description!: string;
