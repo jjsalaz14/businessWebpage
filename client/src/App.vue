@@ -15,6 +15,9 @@
           <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
           <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
         </div>
+        <div class="navbar-row-2">
+          <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link> 
+        </div>
         <div class="navbar-end">
           <div class="navbar-item">
           </div>
@@ -127,6 +130,11 @@ export default class App extends Vue {
   padding-top: .1px;
   background-color: hsl(217, 71%, 53%);
   font-weight: bold;
+}
+
+.navbar-row-2 {
+  padding-top: 1px;
+  padding-right: 20px;
 }
 
 
