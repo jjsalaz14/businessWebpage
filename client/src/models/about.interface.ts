@@ -6,5 +6,10 @@ export interface iAbout {
     fHours: string,
     saHours: string,
     suHours: string,
+    phoneNumber: string,
+    street: string,
+    city: string,
+    stateName: string,
+    zipcode: string,
     id: number
   }
