@@ -10,14 +10,24 @@
     <div class="navbar">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
-          <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link> 
-          <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
+          <div>
+            <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
+          </div>
+          <div>
+            <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">Contact</router-link> 
+            <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link>
+          </div>
+          <div>
+            <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
+          </div>
+        <div>
           <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
+          <router-link class="navbar-item is-tab" to="/edit-deals" exact-active-class="is-active">Edit Deals</router-link>  
         </div>
-        <div class="navbar-row-2">
-          <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link> 
+        
+        
         </div>
+
         <div class="navbar-end">
           <div class="navbar-item">
           </div>
@@ -132,10 +142,6 @@ export default class App extends Vue {
   font-weight: bold;
 }
 
-.navbar-row-2 {
-  padding-top: 1px;
-  padding-right: 20px;
-}
 
 
 </style>
