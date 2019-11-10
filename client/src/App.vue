@@ -19,6 +19,7 @@
           </div>
           <div>
             <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
+             <router-link class="navbar-item is-tab" to="/edit-services" exact-active-class="is-active">Edit Services</router-link> 
           </div>
         <div>
           <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
@@ -137,11 +138,11 @@ export default class App extends Vue {
 }
 
 .navbar {
-  padding-top: .1px;
+  // padding-top: .1px;
+  display: block;
   background-color: hsl(217, 71%, 53%);
   font-weight: bold;
 }
-
 
 
 </style>
