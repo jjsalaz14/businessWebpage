@@ -32,6 +32,21 @@ export class DealsController extends DefaultController {
         });
       });
 
+      router.route("/deals/:id")
+      .delete((req: Request, res: Response) => {
+        dealsRepo.findOne(req.params.id).then((foundDeal: Deals | undefined) => {
+          if (foundDeal == undefined) {
+            console.log("Error when deleting deal")
+            res.sendStatus(404);
+            return;
+          }
+          dealsRepo.delete(foundDeal).then(x => {
+            res.status(200).send(foundDeal);
+            console.log("Deal deleted successfully");
+          });
+        });
+      });
+
 
     return router;
   }
