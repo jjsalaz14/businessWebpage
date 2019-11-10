@@ -19,6 +19,20 @@ export class DealsController extends DefaultController {
           res.status(200).send(services);
       })
     });
+
+    router.route("/newdeal")
+      .post((req: Request, res: Response) => {
+        const newDeal = new Deals();
+        newDeal.title = req.body.title;
+        newDeal.expiration = req.body.expiration;
+        newDeal.description = req.body.description;
+        dealsRepo.save(newDeal).then((savedDeal: Deals) => {
+          res.status(200).send(savedDeal);
+          console.log("New Deal Added");
+        });
+      });
+
+
     return router;
   }
 }
