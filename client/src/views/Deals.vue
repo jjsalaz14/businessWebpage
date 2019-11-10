@@ -1,14 +1,23 @@
 <template>
   <div class="deals">
   <div class="description">
-    <h1 style="font-size:200%; font-weight:bold">Current Coupons and Promotions:</h1><br>
+    
       <div>
-        <img src="../assets/inflatedImage.png">
+        <div class="image">
+          <img src="../assets/inflatedImage.png">
+        </div>
+        <div class="image-2">
+          <img src="../assets/inflatedImage.png">
+        </div>
+        <div class="deals-list">
+          <h1 style="font-size:200%; font-weight:bold">Current Coupons and Promotions:</h1><br>
         <article v-for="(a, index) in deals" v-bind:key="index">
           <p> <u>{{a.title}}</u>:  Good Before: {{a.expiration}}</p>
           <p> {{a.description}} </p>
           <br>
         </article>
+        </div>
+
       </div>
   </div>
 
@@ -61,12 +70,31 @@ export default class Deals extends Vue {
   text-align: center;
 }
 
-.img {
-    padding-top: 45px;
-    padding-left: 70px;
-    /* -ms-transform: rotate(315deg); 
+.image {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-right: 5px;
+    width: 20%;
+    float: left;
+    -ms-transform: rotate(315deg); 
     -webkit-transform: rotate(315deg); 
-    transform: rotate(315deg);  */
+    transform: rotate(315deg); 
+}
+.image-2 {
+    padding-top: 50px;
+    padding-left: 5px;
+    padding-right: 10px;
+    width: 20%;
+    float: right;
+    -ms-transform: rotate(45deg); 
+    -webkit-transform: rotate(45deg); 
+    transform: rotate(45deg); 
+}
+
+.deals-list {
+  padding-top: 20px;
+  padding-left: 0px;
+  padding-right: 10px;
 }
 
 </style>
