@@ -19,6 +19,18 @@ export class ServicesController extends DefaultController {
           res.status(200).send(services);
       })
     });
+
+    router.route("/newservice")
+    .post((req: Request, res: Response) => {
+      const newService = new Services();
+      newService.seTitle = req.body.seTitle;
+      newService.sePrice = req.body.sePrice;
+      newService.seDescription = req.body.seDescription;
+      servicesRepo.save(newService).then((savedService: Services) => {
+        res.status(200).send(savedService);
+        console.log("New Service Added");
+      });
+    });
     return router;
   }
 }
