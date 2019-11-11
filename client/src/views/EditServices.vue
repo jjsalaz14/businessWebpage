@@ -24,13 +24,18 @@
       <div class="services-list">
       <h1 style="font-size:120%; font-weight:bold"><u>Current Services</u></h1>
       <br>
+      <form>
       <article v-for="(a, index) in services" v-bind:key="index">
         <div class="box">
-           <button style="margin-left: 550px; " v-on:click="deleteService(a.id)">&times;</button>
-          <p> <u>{{a.seTitle}}</u>:  Price: ${{a.sePrice}}</p>
-          <p> {{a.seDescription}} </p>
+          <button style="margin-left: 550px; " v-on:click="deleteService(a.id)">&times;</button>
+          <p> Title: <textarea class="service-desc" rows="1" style="width:180px"  v-model="a.seTitle" required></textarea></p>  
+          <p>Price: <textarea class="service-desc" rows="1" style="width:180px" v-model="a.sePrice" required></textarea></p>
+          <p>Description:</p>
+          <p><textarea class="service-desc" rows="3" style="width:550px" v-model="a.seDescription" required> </textarea></p>
+          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, a.sePrice, a.seDescription)">update</button>
         </div>
       </article>
+      </form>
       <br><br><br><br><br>
       </div>
     </div>
@@ -53,6 +58,7 @@ export default class EditServices extends Vue {
   seTitle: string = "";
   sePrice: number = 0;
   seDescription: string = "";
+
 
   addService(){
     axios
@@ -96,7 +102,7 @@ export default class EditServices extends Vue {
       });
   }
 
-    deleteService(id: number){
+  deleteService(id: number){
         axios
           .delete(APIConfig.buildUrl("/services/" + id))
           .then((response: AxiosResponse) => {
@@ -108,6 +114,22 @@ export default class EditServices extends Vue {
             this.error = "bad";
           });
   }
+
+    updateService(id: number, title: string, price: number, desc: string) {
+    axios
+      .put(APIConfig.buildUrl("/updateservices/" + id), {
+        seTitle: title,
+        sePrice: price,
+        seDescription: desc
+      })
+      .then((response: AxiosResponse) => {
+        this.services[id] = response.data;
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("catch");
+        this.error = "bad";
+      })};
 
 }
 </script>
@@ -138,6 +160,10 @@ export default class EditServices extends Vue {
   padding: 10px;
   border: 1px solid gray;
   margin: 0;
+}
+
+.service-desc {
+  font-size: 14px; 
 }
 
 </style>

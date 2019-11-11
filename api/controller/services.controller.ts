@@ -46,6 +46,28 @@ export class ServicesController extends DefaultController {
         });
       });
     });
+
+    router.route("/updateservices/:id")
+    .put((req: Request, res: Response) => {
+      console.log("inside updating services")
+      servicesRepo.findOne(req.params.id).then((foundService: Services | undefined) => {
+        if (foundService == undefined) {
+          console.log("Error updating service")
+          res.sendStatus(404);
+          return;
+        }
+
+        foundService.seTitle = req.body.seTitle
+        foundService.sePrice = req.body.sePrice
+        foundService.seDescription = req.body.seDescription
+
+        servicesRepo.save(foundService).then((updatedService: Services) => {
+          console.log("Service Updated Successfully")
+          res.status(200).send(updatedService);
+        });
+      });
+    });
+
     return router;
   }
 }
