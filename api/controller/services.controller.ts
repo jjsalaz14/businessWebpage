@@ -31,6 +31,21 @@ export class ServicesController extends DefaultController {
         console.log("New Service Added");
       });
     });
+
+    router.route("/services/:id")
+    .delete((req: Request, res: Response) => {
+      servicesRepo.findOne(req.params.id).then((foundService: Services | undefined) => {
+        if (foundService == undefined) {
+          console.log("Error when deleting service")
+          res.sendStatus(404);
+          return;
+        }
+        servicesRepo.delete(foundService).then(x => {
+          res.status(200).send(foundService);
+          console.log("Service deleted successfully");
+        });
+      });
+    });
     return router;
   }
 }
