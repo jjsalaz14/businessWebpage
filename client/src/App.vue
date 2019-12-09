@@ -11,19 +11,64 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <div>
-            <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
+            <b-dropdown hoverable aria-role="list">
+              <button class="button is-primary is-focused" slot="trigger" style="width:100%, height:100%">
+                  <span>
+                    <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
+                  </span>
+                  <b-icon icon="menu-down"></b-icon>
+              </button>
+
+                      <!-- <button
+                        class="button is-primary is-focused"
+                        style="width:100%"
+                      >login</button> -->
+
+
+            </b-dropdown>
+ 
           </div>
           <div>
-            <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">Contact</router-link> 
-            <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link>
+            <b-dropdown hoverable aria-role="list">
+              <button class="button is-info" slot="trigger">
+                  <span>
+                    <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active"> Contact</router-link>
+                  </span>
+                  <b-icon icon="menu-down"></b-icon>
+              </button>
+              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
+                  <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link>
+              </b-dropdown-item>
+            </b-dropdown>
           </div>
           <div>
-            <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
-             <router-link class="navbar-item is-tab" to="/edit-services" exact-active-class="is-active" v-if="isLoggedIn">Edit Services</router-link> 
+            <b-dropdown hoverable aria-role="list">
+              <button class="button is-info" slot="trigger">
+                <span>
+                    <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
+                </span>
+                <b-icon icon="menu-down"></b-icon>
+              </button>
+              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
+                <router-link class="navbar-item is-tab" to="/edit-services" exact-active-class="is-active">Edit Services</router-link> 
+              </b-dropdown-item>
+            </b-dropdown>
+             
           </div>
         <div>
-          <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
-          <router-link class="navbar-item is-tab" to="/edit-deals" exact-active-class="is-active">Edit Deals</router-link> 
+          <b-dropdown hoverable aria-role="list">
+              <button class="button is-info" slot="trigger">
+                <span>
+                    <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
+                </span>
+                <b-icon icon="menu-down"></b-icon>
+              </button>
+              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
+                <router-link class="navbar-item is-tab" to="/edit-deals" exact-active-class="is-active">Edit Deals</router-link> 
+              </b-dropdown-item>
+            </b-dropdown>
+          
+          
 
         </div>
         
@@ -285,6 +330,7 @@ export interface LoginForm {
   background-color: hsl(217, 71%, 53%);
   font-weight: bold;
 }
+
 
 
 
