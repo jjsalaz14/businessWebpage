@@ -4,133 +4,117 @@
       <img class= "car-logo" src="../src/assets/truck-logo.jpg" width="100" height="100"/>
       <p class="phone"> {{a.phoneNumber}}</p>
     </article>
-    <div class="shop-name">
+    <div v-if="!isLoggedIn" class="shop-name">
       <p> Texano Tire Shop</p>
+    </div>
+    <div v-if="isLoggedIn" class="shop-name">
+      <p> Texano Tire Shop <span style="color:hsl(217, 71%, 53%)">- owner</span></p>
+
     </div>
     <div class="navbar">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <div>
-            <b-dropdown hoverable aria-role="list">
-              <button class="button is-primary is-focused" slot="trigger" style="width:100%, height:100%">
-                  <span>
-                    <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
-                  </span>
-                  <b-icon icon="menu-down"></b-icon>
-              </button>
 
-                      <!-- <button
-                        class="button is-primary is-focused"
-                        style="width:100%"
-                      >login</button> -->
-
-
-            </b-dropdown>
  
-          </div>
-          <div>
-            <b-dropdown hoverable aria-role="list">
-              <button class="button is-info" slot="trigger">
-                  <span>
-                    <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active"> Contact</router-link>
-                  </span>
-                  <b-icon icon="menu-down"></b-icon>
-              </button>
-              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
-                  <router-link class="navbar-item is-tab" to="/edit-about" exact-active-class="is-active">Edit Contact</router-link>
-              </b-dropdown-item>
-            </b-dropdown>
-          </div>
-          <div>
-            <b-dropdown hoverable aria-role="list">
-              <button class="button is-info" slot="trigger">
-                <span>
-                    <router-link class="navbar-item is-tab" to="/services" exact-active-class="is-active">Services</router-link> 
-                </span>
-                <b-icon icon="menu-down"></b-icon>
-              </button>
-              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
-                <router-link class="navbar-item is-tab" to="/edit-services" exact-active-class="is-active">Edit Services</router-link> 
-              </b-dropdown-item>
-            </b-dropdown>
-             
-          </div>
-        <div>
-          <b-dropdown hoverable aria-role="list">
-              <button class="button is-info" slot="trigger">
-                <span>
-                    <router-link class="navbar-item is-tab" to="/deals" exact-active-class="is-active">Deals</router-link> 
-                </span>
-                <b-icon icon="menu-down"></b-icon>
-              </button>
-              <b-dropdown-item v-if="isLoggedIn" aria-role="listitem">
-                <router-link class="navbar-item is-tab" to="/edit-deals" exact-active-class="is-active">Edit Deals</router-link> 
-              </b-dropdown-item>
-            </b-dropdown>
-          
-          
+        <!-- Public Main Screen -->
+        <div v-if="!isLoggedIn"> 
+          <router-link style="width: 100px;" to="/" tag="button" class="button is-info">Home</router-link>
+          <router-link style="width: 100px;" to="/about" tag="button" class="button is-info">Contact</router-link>
+          <router-link style="width: 100px;" to="/services" tag="button" class="button is-info">Services</router-link>
+          <router-link style="width: 100px;" to="/deals" tag="button" class="button is-info">Deals</router-link>
+          <b-dropdown style="margin-left: 560px" hoverable position="is-bottom-left">
+            <button class="button is-info" slot="trigger">
+                <span>Log In</span>
+            </button>
+          <b-dropdown-item custom paddingless>
+                  <form @submit.prevent="login">
+                    <div class="modal-card" style="width:300px; ">
+                      <section class="modal-card-body">
+                        <b-notification v-if="loginFailed" type="is-danger">Incorrect ID or Password</b-notification>
+                        
+                        <b-field label="Username">
+                          <b-input
+                            v-model="signup.emailAddress"
+                            type="text"
+                            placeholder="Username"
+                            required
+                          ></b-input>
+                        </b-field>
 
-        </div>
-        
-        <b-dropdown v-if="!isLoggedIn" position="is-bottom-left">
-        <a class="navbar-item is-info" slot="trigger">
-          <span>
-            Log In
-            <span class="icon is-small is-left">
-              <i class="fas fa-caret-down"></i>
-            </span>
-          </span>
-        </a>
-        <b-dropdown-item custom paddingless>
-                <form @submit.prevent="login">
-                  <div class="modal-card" style="width:300px; ">
-                    <section class="modal-card-body">
-                      <b-notification v-if="loginFailed" type="is-danger">Incorrect ID or Password</b-notification>
-                      
-                      <b-field label="employee id">
-                        <b-input
-                          v-model="signup.emailAddress"
-                          type="text"
-                          placeholder="Username"
-                          required
-                        ></b-input>
-                      </b-field>
+                        <b-field label="Password">
+                          <b-input
+                            v-model="signup.password"
+                            type="password"
+                            password-reveal
+                            placeholder="your password"
+                            required
+                          ></b-input>
+                        </b-field>
 
-                      <b-field label="Password">
-                        <b-input
-                          v-model="signup.password"
-                          type="password"
-                          password-reveal
-                          placeholder="your password"
-                          required
-                        ></b-input>
-                      </b-field>
-
-                    </section>
-                    <footer class="modal-card-foot">
-                      <button
-                        class="button is-primary is-focused"
-                        style="width:100%"
-                      >login</button>
-                    </footer>
-                  </div>
-                </form>
-              </b-dropdown-item>
+                      </section>
+                      <footer class="modal-card-foot">
+                        <button
+                          class="button is-primary is-focused"
+                          style="width:100%"
+                        >login</button>
+                      </footer>
+                    </div>
+                  </form>
+                </b-dropdown-item>
         </b-dropdown>
+
         </div>
 
-        <div>
-        <!-- <hr class="navbar-divider"> -->
-        <button  v-if="isLoggedIn" v-on:click="logout()">
-          log out
+        <!-- Owner Main Screen -->
+        <div v-if="isLoggedIn"> 
+
+          <router-link style="width: 100px;" to="/" tag="button" class="button is-info">Home</router-link>
+
+          <b-dropdown hoverable aria-role="list">
+            <button style="width: 100px;" class="button is-info" slot="trigger">
+                <span>Contact</span>
+                
+            </button>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/about" exact-active-class="is-active"> Show Contact Info</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/edit-about" exact-active-class="is-active"> Edit Contact</router-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
+          <b-dropdown hoverable aria-role="list">
+            <button style="width: 100px;" class="button is-info" slot="trigger">
+                <span>Services</span>
+                
+            </button>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/services" exact-active-class="is-active"> Show Services</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/edit-services" exact-active-class="is-active"> Edit Services</router-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
+          <b-dropdown hoverable aria-role="list">
+            <button style="width: 100px;" class="button is-info" slot="trigger">
+                <span>Deals</span>
+                
+            </button>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/deals" exact-active-class="is-active"> Deals</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/edit-deals" exact-active-class="is-active"> Edit Deals</router-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
+        <button style="width: 100px; margin-left: 740px" class="button is-info" v-if="isLoggedIn" v-on:click="logout()">
+          Log Out
         </button>
-        <!-- <b-dropdown custom paddingless>
-          <b-dropdown-item class="menu-selectors" v-on:click="logout()">
-            <span class="navicon">
-            </span>
-            Log Out
-          </b-dropdown-item>
-        </b-dropdown> -->
+
+      </div>
+      
         </div>
 
 
