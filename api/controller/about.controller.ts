@@ -32,6 +32,8 @@ export class AboutController extends DefaultController {
 
 
     router.route("/about/:id")
+
+
     .put((req: Request, res: Response) => {
       aboutRepo.findOne(req.params.id).then((foundAbout: About | undefined) => {
         if (foundAbout == undefined) {
@@ -53,11 +55,41 @@ export class AboutController extends DefaultController {
         foundAbout.zipcode = req.body.zipcode;
 
         aboutRepo.save(foundAbout).then((updatedAbout: About) => {
-          //console.log(updatedAbout)
+          console.log(updatedAbout)
           res.status(200).send(updatedAbout);
         });
       });
     });
+
+
+
+
+    // .put((req: Request, res: Response) => {
+    //   aboutRepo.findOne(req.params.id).then((foundAbout: About | undefined) => {
+    //     if (foundAbout == undefined) {
+    //       res.sendStatus(404);
+    //       return;
+    //     }
+
+    //     foundAbout.mHours = req.body.mHours;
+    //     foundAbout.tHours = req.body.tHours;
+    //     foundAbout.wHours = req.body.wHours;
+    //     foundAbout.rHours = req.body.rHours;
+    //     foundAbout.fHours = req.body.fHours;
+    //     foundAbout.saHours = req.body.saHours;
+    //     foundAbout.suHours = req.body.suHours;
+    //     foundAbout.phoneNumber = req.body.phoneNumber;
+    //     foundAbout.street = req.body.street;
+    //     foundAbout.city = req.body.city;
+    //     foundAbout.stateName = req.body.stateName;
+    //     foundAbout.zipcode = req.body.zipcode;
+
+    //     aboutRepo.save(foundAbout).then((updatedAbout: About) => {
+    //       console.log(updatedAbout)
+    //       res.status(200).send(updatedAbout);
+    //     });
+    //   });
+    // });
 
     return router;
   }

@@ -39,34 +39,51 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { iAbout } from "../models/about.interface";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { log } from "util";
+import { isAbsolute } from "path";
 
 @Component({})
+
 export default class About extends Vue {
   error: string | boolean = false;
-  about: iAbout[] = [];
+  about: iAbout[] = [];  
 
   created() {
-    this.getAllAbout();
+
+    this.getAllAbout().then(data => {
+      console.log(data);
+      this.about.push(data[0]["0"]);
+    });
+
+
   }
 
+
   getAllAbout() {
-    this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/about"), {
-        headers: {
-          token: this.$store.state.userToken
+    this.error = false;    
+
+    var aboutArray = [""];
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/about.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          aboutArray.push(data[key]);
+          console.log(key);
         }
-      })
-      .then((response: AxiosResponse) => {
-        this.about = response.data;
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+        //Remove "" element in array
+        aboutArray.shift();
+
+      return aboutArray;
+      
+    })
   }
+
+
+
+  
 }
 </script>
 
