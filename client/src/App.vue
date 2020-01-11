@@ -181,26 +181,31 @@ export default class App extends Vue {
 }
 
   created() {
-    this.getAllAbout();
+    this.getAllAbout().then(data => {
+      console.log(data);
+      this.about.push(data[0]["0"]);
+    });
   }
 
   getAllAbout() {
     this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/"), {
-        headers: {
-          token: this.$store.state.userToken
+    var aboutArray = [""];
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/about.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          aboutArray.push(data[key]);
+          console.log(key);
         }
-      })
-      .then((response: AxiosResponse) => {
-        this.about = response.data;
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+        //Remove "" element in array
+        aboutArray.shift();
+
+      return aboutArray;
+      
+    })
   }
 
   showSignupModal() {
