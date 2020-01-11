@@ -83,18 +83,14 @@ export default class EditAbout extends Vue {
   city: string = "";
   state: string = "";
   zipcode: string = "";
+  keyId: string = "";
 
 
   created() {
-    this.getAllAbout();
-  }
-
-  getAllAbout() {
-    this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/about"))
-      .then((response: AxiosResponse) => {
-        this.about = response.data;
+    this.getAllAbout().then(data => {
+      console.log(data[0]["id"]);
+      this.keyId = data[0]["id"];
+      this.about.push(data[0]["0"]);
         this.mon = this.about[0].mHours;
         this.tues = this.about[0].tHours;
         this.wed = this.about[0].wHours;
@@ -108,40 +104,116 @@ export default class EditAbout extends Vue {
         this.state = this.about[0].stateName;
         this.zipcode = this.about[0].zipcode;
 
+    });
+  }
 
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+  getAllAbout() {
+    this.error = false;
+
+    var aboutArray = [""];
+    var keyVal = "";
+
+
+
+    // axios
+    // .get(APIConfig.buildUrl("/about"), 
+    // {headers: {	    
+    //       token: this.$store.state.userToken
+    // }
+    // })
+    // .then((response: AxiosResponse) => {
+    //   this.about = response.data;
+    // axios.post('https://texanotireshop.firebaseio.com/about.json', this.about).then(function(data){
+    //   console.log(data);
+    // });
+
+    //   this.$emit("success");
+    // })
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/about.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          data[key].id = key;
+          aboutArray.push(data[key]);
+          console.log("key ", key);
+          keyVal = key;
+        }
+        //Remove "" element in array
+        aboutArray.shift();
+
+      return aboutArray;
+      
+    })
   }
 
   saveAbout() {
-    console.log("saving about");
-    axios
-      .put(APIConfig.buildUrl("/about/" + this.about[0].id), {
-        mHours: this.mon,
-        tHours: this.tues,
-        wHours: this.wed,
-        rHours: this.thurs,
-        fHours: this.fri,
-        saHours: this.sat,
-        suHours: this.sun,
-        phoneNumber: this.phone,
-        street: this.street,
-        city: this.city,
-        stateName: this.state,
-        zipcode: this.zipcode
-      })
-      .then((response: AxiosResponse) => {
-        console.log("Updated About Info");
-        this.about[0] = response.data;
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("catch");
-        this.error = "bad";
-      });
+
+    this.about[0].mHours =  this.mon,
+    this.about[0].tHours = this.tues,
+    this.about[0].wHours = this.wed,
+    this.about[0].rHours = this.thurs,
+    this.about[0].fHours = this.fri,
+    this.about[0].saHours = this.sat,
+    this.about[0].suHours = this.sun,
+    this.about[0].phoneNumber = this.phone,
+    this.about[0].street = this.street,
+    this.about[0].city = this.city,
+    this.about[0].stateName = this.state,
+    this.about[0].zipcode = this.zipcode
+
+
+    axios.put('https://texanotireshop.firebaseio.com/about/' + this.keyId + '/0.json', {
+      mHours: this.mon,
+      tHours: this.tues,
+      wHours: this.wed,
+      rHours: this.thurs,
+      fHours: this.fri,
+      saHours: this.sat,
+      suHours: this.sun,
+      phoneNumber: this.phone,
+      street: this.street,
+      city: this.city,
+      stateName: this.state,
+      zipcode: this.zipcode,
+      id: 1
+   
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+
+
+    // axios.post('https://texanotireshop.firebaseio.com/about.json', this.about).then(function(data){
+    //   console.log(data);
+    // });
+    // console.log("saving about");
+    // axios
+    //   .put(APIConfig.buildUrl("/about/" + this.about[0].id), {
+    //     mHours: this.mon,
+    //     tHours: this.tues,
+    //     wHours: this.wed,
+    //     rHours: this.thurs,
+    //     fHours: this.fri,
+    //     saHours: this.sat,
+    //     suHours: this.sun,
+    //     phoneNumber: this.phone,
+    //     street: this.street,
+    //     city: this.city,
+    //     stateName: this.state,
+    //     zipcode: this.zipcode
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     console.log("Updated About Info");
+    //     this.about[0] = response.data;
+    //     this.$emit("success");
+    //   })
+    //   .catch((response: AxiosResponse) => {
+    //     console.log("catch");
+    //     this.error = "bad";
+    //   });
   }
 
 
