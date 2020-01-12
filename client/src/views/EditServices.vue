@@ -58,34 +58,55 @@ export default class EditServices extends Vue {
   seTitle: string = "";
   sePrice: number = 0;
   seDescription: string = "";
+  keyId: string = "";
 
 
   addService(){
-    axios
-      .post(APIConfig.buildUrl("/newservice"), {
+
+
+    axios.post('https://texanotireshop.firebaseio.com/services/' + this.keyId + '/' + '.json', {
+        id: this.services.length+1,
         seTitle: this.seTitle,
         sePrice: this.sePrice,
         seDescription: this.seDescription,
-      })
-      .then((response: AxiosResponse) => {
-        this.newService.push(response.data);
-        this.$emit("success");
-        this.seTitle = "";
-        this.sePrice = 0;
-        this.seDescription = "";
-        this.getAllServices();
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("Error creating new deal");
-      });
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+      this.seTitle = "";
+      this.sePrice = 0;
+      this.seDescription = "";
+      this.getAllServices();
+
+    // axios
+    //   .post(APIConfig.buildUrl("/newservice"), {
+    //     seTitle: this.seTitle,
+    //     sePrice: this.sePrice,
+    //     seDescription: this.seDescription,
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.newService.push(response.data);
+    //     this.$emit("success");
+    //     this.seTitle = "";
+    //     this.sePrice = 0;
+    //     this.seDescription = "";
+    //     this.getAllServices();
+    //   })
+    //   .catch((response: AxiosResponse) => {
+    //     console.log("Error creating new deal");
+    //   });
   }
 
   created() {
     this.getAllServices().then(data => {
-      console.log(data[0].length);
+      console.log(data[0]);
+      this.keyId = data[0]["id"];
 
-      for (var i = 0; i<data[0].length; i++){
-        this.services.push(data[0][String(i)]);
+      for (let key in data["0"]){
+          //this.services.push(data[0][key]);
+          if(key != "id"){
+            this.services.push(data[0][key]);
+          }
       }
     });
   }
@@ -101,6 +122,7 @@ export default class EditServices extends Vue {
         return data.data;}).then(function(data) {
 
         for (let key in data){
+          data[key].id = key;
           servicesArray.push(data[key]);
           console.log(key);
         }
@@ -110,8 +132,6 @@ export default class EditServices extends Vue {
       return servicesArray;
       
     })
-
-
 
     // axios
     //   .get(APIConfig.buildUrl("/services"), {
