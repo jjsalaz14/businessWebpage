@@ -69,22 +69,35 @@ export default class EditDeals extends Vue {
   }
 
   addDeal(){
-    axios
-      .post(APIConfig.buildUrl("/newdeal"), {
+    axios.post('https://texanotireshop.firebaseio.com/deals/' + this.keyId + '/' + '.json', {
+        id: this.deals.length+1,
         title: this.title,
         expiration: this.expiration,
         description: this.description,
-      })
-      .then((response: AxiosResponse) => {
-        this.newDeal.push(response.data);
-        this.$emit("success");
-        this.title = "";
-        this.expiration = "";
-        this.description = "";
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("Error creating new deal");
-      });
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+      this.title = "";
+      this.expiration = "";
+      this.description = "";
+      this.getAllDeals();
+    // axios
+    //   .post(APIConfig.buildUrl("/newdeal"), {
+    //     title: this.title,
+    //     expiration: this.expiration,
+    //     description: this.description,
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.newDeal.push(response.data);
+    //     this.$emit("success");
+    //     this.title = "";
+    //     this.expiration = "";
+    //     this.description = "";
+    //   })
+    //   .catch((response: AxiosResponse) => {
+    //     console.log("Error creating new deal");
+    //   });
   }
 
     created() {
