@@ -53,6 +53,7 @@ export default class EditDeals extends Vue {
   title: string = "";
   expiration: string = "";
   description: string = "";
+  keyId: string = "";
 
   deleteDeal(id: number){
         axios
@@ -87,26 +88,57 @@ export default class EditDeals extends Vue {
   }
 
     created() {
-    this.getAllDeals();
+    this.getAllDeals().then(data => {
+      console.log(data);
+      this.keyId = data[0]["id"];
+
+      for (let key in data["0"]){
+          if(key != "id"){
+            console.log(key);
+            data[0][key].key = key;
+            this.deals.push(data[0][key]);
+          }
+      }
+      console.log(this.deals);
+    });
   }
 
   getAllDeals() {
     this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/deals"), {
-        headers: {
-          token: this.$store.state.userToken
+
+    var dealsArray = [""];
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/deals.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          data[key].id = key;
+          dealsArray.push(data[key]);
         }
-      })
-      .then((response: AxiosResponse) => {
-        this.deals = response.data;
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+        //Remove "" element in array
+        dealsArray.shift();
+
+      return dealsArray;
+      
+    })
+
+    // axios
+    //   .get(APIConfig.buildUrl("/deals"), {
+    //     headers: {
+    //       token: this.$store.state.userToken
+    //     }
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.deals = response.data;
+    //     console.log(response.data);
+    //     this.$emit("success");
+    //   })
+    //   .catch((res: AxiosError) => {
+    //     this.error = res.response && res.response.data.error;
+    //     console.log(this.error);
+    //   });
   }
 
 }
