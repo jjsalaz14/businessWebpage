@@ -33,9 +33,12 @@ export default class Services extends Vue {
     this.getAllServices().then(data => {
       console.log(data[0].length);
 
-      for (var i = 0; i<data[0].length; i++){
-        this.services.push(data[0][String(i)]);
-      }
+      for (let key in data["0"]){
+          //this.services.push(data[0][key]);
+          if(key != "id"){
+            this.services.push(data[0][key]);
+          }
+        }
     });
   }
 
@@ -60,7 +63,6 @@ export default class Services extends Vue {
       
     })
 
-
     // axios
     //   .get(APIConfig.buildUrl("/services"), {
     //     headers: {
@@ -83,10 +85,6 @@ export default class Services extends Vue {
     //     this.error = res.response && res.response.data.error;
     //     console.log(this.error);
     //   });
-
-
-
-
 
   }
 }
