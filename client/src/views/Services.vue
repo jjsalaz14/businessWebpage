@@ -30,26 +30,64 @@ export default class Services extends Vue {
   services: iServices[] = [];
 
   created() {
-    this.getAllServices();
+    this.getAllServices().then(data => {
+      console.log(data[0].length);
+
+      for (var i = 0; i<data[0].length; i++){
+        this.services.push(data[0][String(i)]);
+      }
+    });
   }
 
   getAllServices() {
     this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/services"), {
-        headers: {
-          token: this.$store.state.userToken
+
+    var servicesArray = [""];
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/services.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          servicesArray.push(data[key]);
+          console.log(key);
         }
-      })
-      .then((response: AxiosResponse) => {
-        this.services = response.data;
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+        //Remove "" element in array
+        servicesArray.shift();
+
+      return servicesArray;
+      
+    })
+
+
+    // axios
+    //   .get(APIConfig.buildUrl("/services"), {
+    //     headers: {
+    //       token: this.$store.state.userToken
+    //     }
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.services = response.data;
+    //     console.log(response.data);
+
+
+    //     axios.post('https://texanotireshop.firebaseio.com/services.json', this.services).then(function(data){
+    //   console.log(data);
+    //     });
+
+
+    //     this.$emit("success");
+    //   })
+    //   .catch((res: AxiosError) => {
+    //     this.error = res.response && res.response.data.error;
+    //     console.log(this.error);
+    //   });
+
+
+
+
+
   }
 }
 </script>
