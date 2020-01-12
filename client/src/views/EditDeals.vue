@@ -56,16 +56,27 @@ export default class EditDeals extends Vue {
   keyId: string = "";
 
   deleteDeal(id: number){
-        axios
-          .delete(APIConfig.buildUrl("/deals/" + id))
-          .then((response: AxiosResponse) => {
-            const deletedDeals = response.data;
-            this.getAllDeals();
-            this.$emit("success");
-          })
-          .catch((response: AxiosResponse) => {
-            this.error = "bad";
-          });
+    var keyId = this.deals[id-1]["key"];
+    var servicesKey = this.keyId;
+
+    console.log("inside delete");
+    console.log(this.keyId);
+    const axios = require('axios');
+    async function makeRequest() {
+      let res = await axios.delete('https://texanotireshop.firebaseio.com/deals/' + servicesKey + '/' + keyId + '.json');
+      console.log(res.status);
+    }
+    makeRequest();
+        // axios
+        //   .delete(APIConfig.buildUrl("/deals/" + id))
+        //   .then((response: AxiosResponse) => {
+        //     const deletedDeals = response.data;
+        //     this.getAllDeals();
+        //     this.$emit("success");
+        //   })
+        //   .catch((response: AxiosResponse) => {
+        //     this.error = "bad";
+        //   });
   }
 
   addDeal(){
@@ -102,6 +113,7 @@ export default class EditDeals extends Vue {
 
     created() {
     this.getAllDeals().then(data => {
+      console.log("get deals");
       console.log(data);
       this.keyId = data[0]["id"];
 
@@ -113,6 +125,7 @@ export default class EditDeals extends Vue {
           }
       }
       console.log(this.deals);
+      console.log("size", this.deals.length);
     });
   }
 
