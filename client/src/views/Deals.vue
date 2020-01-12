@@ -39,26 +39,58 @@ export default class Deals extends Vue {
   deals: iDeals[] = [];
 
   created() {
-    this.getAllDeals();
+    this.getAllDeals().then(data => {
+      console.log(data[0]);
+
+      for (let key in data["0"]){
+          if(key != "id"){
+            this.deals.push(data[0][key]);
+          }
+        }
+    });
   }
 
   getAllDeals() {
     this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/deals"), {
-        headers: {
-          token: this.$store.state.userToken
+
+    var dealsArray = [""];
+    
+
+    return axios.get('https://texanotireshop.firebaseio.com/deals.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+
+        for (let key in data){
+          dealsArray.push(data[key]);
+          console.log(key);
         }
-      })
-      .then((response: AxiosResponse) => {
-        this.deals = response.data;
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+        //Remove "" element in array
+        dealsArray.shift();
+
+      return dealsArray;
+      
+    })
+
+    // axios
+    //   .get(APIConfig.buildUrl("/deals"), {
+    //     headers: {
+    //       token: this.$store.state.userToken
+    //     }
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.deals = response.data;
+    //     console.log(response.data);
+
+    //     axios.post('https://texanotireshop.firebaseio.com/deals.json', this.deals).then(function(data){
+    //   console.log(data);
+    //     });
+
+    //     this.$emit("success");
+    //   })
+    //   .catch((res: AxiosError) => {
+    //     this.error = res.response && res.response.data.error;
+    //     console.log(this.error);
+    //   });
   }
 }
 </script>
