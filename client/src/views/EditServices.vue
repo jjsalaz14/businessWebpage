@@ -98,16 +98,19 @@ export default class EditServices extends Vue {
   }
 
   created() {
+    // this.getAllServices();
     this.getAllServices().then(data => {
-      console.log(data[0]);
+      console.log("data");
       this.keyId = data[0]["id"];
 
       for (let key in data["0"]){
-          //this.services.push(data[0][key]);
           if(key != "id"){
+            data[0][key].key = key;
             this.services.push(data[0][key]);
           }
       }
+
+      console.log(this.services);
     });
   }
     getAllServices() {
@@ -142,6 +145,12 @@ export default class EditServices extends Vue {
     //   .then((response: AxiosResponse) => {
     //     this.services = response.data;
     //     console.log(response.data);
+
+    //     axios.post('https://texanotireshop.firebaseio.com/services.json', this.services).then(function(data){
+    //   console.log(data);
+    //     });
+
+
     //     this.$emit("success");
     //   })
     //   .catch((res: AxiosError) => {
@@ -151,33 +160,49 @@ export default class EditServices extends Vue {
   }
 
   deleteService(id: number){
-        axios
-          .delete(APIConfig.buildUrl("/services/" + id))
-          .then((response: AxiosResponse) => {
-            const deletedService = response.data;
-            this.getAllServices();
-            this.$emit("success");
-          })
-          .catch((response: AxiosResponse) => {
-            this.error = "bad";
-          });
+
+
+    var keyId = this.services[id-1]["key"];
+
+    var servicesKey = this.keyId;
+
+    console.log(servicesKey);
+
+    const axios = require('axios');
+    async function makeRequest() {
+      let res = await axios.delete('https://texanotireshop.firebaseio.com/services/' + servicesKey + '/' + keyId + '.json');
+      console.log(res.status);
+    }
+    makeRequest();
+  
+        // axios
+        //   .delete(APIConfig.buildUrl("/services/" + id))
+        //   .then((response: AxiosResponse) => {
+        //     const deletedService = response.data;
+        //     this.getAllServices();
+        //     this.$emit("success");
+        //   })
+        //   .catch((response: AxiosResponse) => {
+        //     this.error = "bad";
+        //   });
   }
 
     updateService(id: number, title: string, price: number, desc: string) {
-    axios
-      .put(APIConfig.buildUrl("/updateservices/" + id), {
-        seTitle: title,
-        sePrice: price,
-        seDescription: desc
-      })
-      .then((response: AxiosResponse) => {
-        this.services[id] = response.data;
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("catch");
-        this.error = "bad";
-      })};
+    // axios
+    //   .put(APIConfig.buildUrl("/updateservices/" + id), {
+    //     seTitle: title,
+    //     sePrice: price,
+    //     seDescription: desc
+    //   })
+    //   .then((response: AxiosResponse) => {
+    //     this.services[id] = response.data;
+    //     this.$emit("success");
+    //   })
+    //   .catch((response: AxiosResponse) => {
+    //     console.log("catch");
+    //     this.error = "bad";
+    //   })
+      };
 
 }
 </script>
