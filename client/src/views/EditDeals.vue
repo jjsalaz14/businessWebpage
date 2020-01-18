@@ -59,14 +59,17 @@ export default class EditDeals extends Vue {
     var keyId = this.deals[id-1]["key"];
     var servicesKey = this.keyId;
 
+    let DealsObj = new EditDeals; 
+
     console.log("inside delete");
     console.log(this.keyId);
     const axios = require('axios');
-    async function makeRequest() {
+    async function makeRequest(DealsObj: EditDeals) {
       let res = await axios.delete('https://texanotireshop.firebaseio.com/deals/' + servicesKey + '/' + keyId + '.json');
+      DealsObj.getAllDeals();
       console.log(res.status);
     }
-    makeRequest();
+    makeRequest(DealsObj);
         // axios
         //   .delete(APIConfig.buildUrl("/deals/" + id))
         //   .then((response: AxiosResponse) => {
@@ -92,7 +95,7 @@ export default class EditDeals extends Vue {
       this.title = "";
       this.expiration = "";
       this.description = "";
-      this.getAllDeals();
+      this.created();
     // axios
     //   .post(APIConfig.buildUrl("/newdeal"), {
     //     title: this.title,
