@@ -32,7 +32,7 @@
           <p>Price: <textarea class="service-desc" rows="1" style="width:180px" v-model="a.sePrice" required></textarea></p>
           <p>Description:</p>
           <p><textarea class="service-desc" rows="3" style="width:550px" v-model="a.seDescription" required> </textarea></p>
-          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, a.sePrice, a.seDescription)">update</button>
+          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, Number(a.sePrice), a.seDescription)">update</button>
         </div>
       </article>
       </form>
