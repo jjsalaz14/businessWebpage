@@ -187,7 +187,51 @@ export default class EditServices extends Vue {
         //   });
   }
 
-    updateService(id: number, title: string, price: number, desc: string) {
+    updateService(idd: number, title: string, price: number, desc: string) {
+
+
+      //TODO:
+      //Loop thrugh key to get actual array postion of idd
+      //idd will not work if an item is deleted
+
+
+      var keyId = this.services[idd-1]["key"];
+      var servicesKey = this.keyId;
+
+      console.log(price);
+
+    axios.put('https://texanotireshop.firebaseio.com/services/' + servicesKey + '/' + keyId + '.json', {
+      id: idd,
+      seDescription: desc,
+      sePrice: price,
+      seTitle: title,
+    })
+    .then(function (response) {
+      console.log("sucess");
+    })
+    .catch(function(error){
+    console.log("error");
+    console.log(error);
+    });
+
+    }
+
+      //     axios
+      // .put(APIConfig.buildUrl("/updateservices/" + id), {
+      //   seTitle: title,
+      //   sePrice: price,
+      //   seDescription: desc
+      // })
+      // .then((response: AxiosResponse) => {
+      //   this.services[id] = response.data;
+      //   this.$emit("success");
+      // })
+      // .catch((response: AxiosResponse) => {
+      //   console.log("catch");
+      //   this.error = "bad";
+      // })
+
+
     // axios
     //   .put(APIConfig.buildUrl("/updateservices/" + id), {
     //     seTitle: title,
@@ -202,7 +246,7 @@ export default class EditServices extends Vue {
     //     console.log("catch");
     //     this.error = "bad";
     //   })
-      };
+
 
 }
 </script>
