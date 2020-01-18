@@ -24,7 +24,8 @@
         <div>Sunday: {{a.suHours}}</div>
       </div>
       <div class="map">
-        <img src="../assets/map.png">
+        <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/map.png?alt=media&token=de0a908e-7468-45ed-8733-87442e180c9c">
+        <!-- src="../assets/map.png" -->
       </div>
     </article>
   </div>

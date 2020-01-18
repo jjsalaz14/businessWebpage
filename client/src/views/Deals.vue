@@ -4,10 +4,12 @@
     
       <div>
         <div class="image">
-          <img src="../assets/inflatedImage.png">
+          <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/inflatedImage.png?alt=media&token=a69825be-de55-4912-8dd4-b40d8d10aca0">
+          <!-- src="../assets/inflatedImage.png" -->
         </div>
         <div class="image-2">
-          <img src="../assets/inflatedImage.png">
+          <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/inflatedImage.png?alt=media&token=a69825be-de55-4912-8dd4-b40d8d10aca0">
+          <!-- src="../assets/inflatedImage.png" -->
         </div>
         <div class="deals-list">
           <h1 style="font-size:200%; font-weight:bold">Current Coupons and Promotions:</h1><br>

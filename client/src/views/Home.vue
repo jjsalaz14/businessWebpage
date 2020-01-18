@@ -6,13 +6,16 @@
       :perPage=1 paginationActiveColor="#239CEC"
       paginationColor="#b2ebd1" :speed=300 :loop="true">
         <slide class="VueCarousel-slide">
-          <img src="../assets/canam.jpg">
+          <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/canam.jpg?alt=media&token=300f9cc2-4d71-4557-bdab-721e24b8383d">
+          <!-- src="../assets/canam.jpg" -->
         </slide>
         <slide class="VueCarousel-slide">
-          <img src="../assets/camaro.jpg">
+          <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/camaro.jpg?alt=media&token=6811d8e2-6352-4f80-87e4-2d14b3d66581">
+          <!-- src="../assets/camaro.jpg" -->
         </slide>
         <slide class="VueCarousel-slide">
-          <img src="../assets/raptor.jpg">
+          <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/raptor.jpg?alt=media&token=d85da3dc-6ec7-43b9-babd-5408b5137c81">
+          <!-- src="../assets/raptor.jpg" -->
         </slide> 
       </carousel>
     </div>

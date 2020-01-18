@@ -1,7 +1,8 @@
 <template>
   <div id="app"> 
     <article v-for="(a, index) in about" v-bind:key="index">
-      <img class= "car-logo" src="../src/assets/truck-logo.jpg" width="100" height="100"/>
+      <img class= "car-logo"  src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/truck-logo.jpg?alt=media&token=3fd03300-8e47-4a52-8a7b-f7521e0059a6" width="100" height="100"/>
+      <!-- src="../src/assets/truck-logo.jpg" -->
       <p class="phone"> {{a.phoneNumber}}</p>
     </article>
     <div v-if="!isLoggedIn" class="shop-name">

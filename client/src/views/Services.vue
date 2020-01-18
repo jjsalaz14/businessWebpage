@@ -1,7 +1,8 @@
 <template>
   <div class="services">
   <div class="tire-changer">
-      <img src="../assets/tireChanger.jpg">
+      <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/tireChanger.jpg?alt=media&token=ac0b002d-9fea-47c5-b425-ef67e1d23b62">
+      <!-- src="../assets/tireChanger.jpg" -->
   </div>
   <div class="description">
     <h1 style="font-size:200%; font-weight:bold">Services Information:</h1><br>
