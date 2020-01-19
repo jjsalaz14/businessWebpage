@@ -59,18 +59,16 @@ export default class EditDeals extends Vue {
   deleteDeal(id: number){
     var keyId = this.deals[id-1]["key"];
     var servicesKey = this.keyId;
-
-    let DealsObj = new EditDeals; 
-
+    var self = this;
     console.log("inside delete");
     console.log(this.keyId);
     const axios = require('axios');
-    async function makeRequest(DealsObj: EditDeals) {
+    async function makeRequest() {
       let res = await axios.delete('https://texanotireshop.firebaseio.com/deals/' + servicesKey + '/' + keyId + '.json');
-      DealsObj.getAllDeals();
+      self.refreshDeals();
       console.log(res.status);
     }
-    makeRequest(DealsObj);
+    makeRequest();
         // axios
         //   .delete(APIConfig.buildUrl("/deals/" + id))
         //   .then((response: AxiosResponse) => {
@@ -84,6 +82,7 @@ export default class EditDeals extends Vue {
   }
 
   addDeal(){
+    var self = this;
     axios.post('https://texanotireshop.firebaseio.com/deals/' + this.keyId + '/' + '.json', {
         id: this.deals.length+1,
         title: this.title,
@@ -92,11 +91,16 @@ export default class EditDeals extends Vue {
     })
     .then(function (response) {
       console.log(response);
+      self.title = "";
+      self.expiration = "";
+      self.description = "";
+      self.refreshDeals();
     })
-      this.title = "";
-      this.expiration = "";
-      this.description = "";
-      this.created();
+      // this.title = "";
+      // this.expiration = "";
+      // this.description = "";
+      // this.getAllDeals();
+
     // axios
     //   .post(APIConfig.buildUrl("/newdeal"), {
     //     title: this.title,
@@ -115,7 +119,26 @@ export default class EditDeals extends Vue {
     //   });
   }
 
-    created() {
+  created() {
+    this.getAllDeals().then(data => {
+      console.log("get deals");
+      console.log(data);
+      this.keyId = data[0]["id"];
+
+      for (let key in data["0"]){
+          if(key != "id"){
+            console.log(key);
+            data[0][key].key = key;
+            this.deals.push(data[0][key]);
+          }
+      }
+      console.log(this.deals);
+      console.log("size", this.deals.length);
+    });
+  }
+
+  refreshDeals() {
+    this.deals = [];
     this.getAllDeals().then(data => {
       console.log("get deals");
       console.log(data);
