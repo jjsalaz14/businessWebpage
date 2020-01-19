@@ -1,5 +1,6 @@
 <template>
-  <div class="edit-services">
+  <div v-if="isLoggedIn">
+  <div v-if="isLoggedIn" class="edit-services">
     <div class="add-service">
       <h1 style="font-size:200%; font-weight:bold">Edit Services:</h1>
       <div class="new-service">
@@ -39,7 +40,7 @@
       <br><br><br><br><br>
       </div>
     </div>
-
+  </div>
   </div>
 </template>
 
@@ -246,6 +247,10 @@ export default class EditServices extends Vue {
     //     console.log("catch");
     //     this.error = "bad";
     //   })
+
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
+  }
 
 
 }

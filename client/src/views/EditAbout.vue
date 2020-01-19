@@ -1,4 +1,5 @@
 <template>
+  <div v-if="isLoggedIn">
   <div class="edit-about">
   <div class="content hours">
     <h1> Edit Contact Information: </h1>
@@ -57,6 +58,7 @@
     </div>
   </div>
 
+  </div>
   </div>
 
 </template>
@@ -215,6 +217,10 @@ export default class EditAbout extends Vue {
     //     console.log("catch");
     //     this.error = "bad";
     //   });
+  }
+
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
   }
 
 
