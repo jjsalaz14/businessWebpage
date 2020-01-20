@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isLoggedIn">
-  <div v-if="isLoggedIn" class="edit-deals">
+  <!-- <div v-if="isLoggedIn"> -->
+  <div class="edit-deals">
     <div class="add-deal">
       <h1 style="font-size:200%; font-weight:bold">Edit Coupons and Promotions:</h1>
       <div class="new-deal">
@@ -26,7 +26,7 @@
       <br>
       <article v-for="(a, index) in deals" v-bind:key="index">
         <div class="box">
-           <button style="margin-left: 550px; " v-on:click="deleteDeal(a.id)">&times;</button>
+           <button style="margin-left: 550px; " v-on:click="deleteDeal(a.id, index)">&times;</button>
           <p> <u>{{a.title}}</u>:  Good Before: {{a.expiration}}</p>
           <p> {{a.description}} </p>
         </div>
@@ -35,7 +35,7 @@
    </div>
   </div>
 </div>
-</div>
+<!-- </div> -->
 
 </template>
 
@@ -56,8 +56,9 @@ export default class EditDeals extends Vue {
   description: string = "";
   keyId: string = "";
 
-  deleteDeal(id: number){
-    var keyId = this.deals[id-1]["key"];
+  deleteDeal(id: number, index: number){
+    //var keyId = this.deals[id-1]["key"];
+    var keyId = this.deals[index]["key"];
     var servicesKey = this.keyId;
     var self = this;
     console.log("inside delete");
@@ -121,7 +122,7 @@ export default class EditDeals extends Vue {
 
   created() {
     this.getAllDeals().then(data => {
-      console.log("get deals");
+      console.log("getting deals");
       console.log(data);
       this.keyId = data[0]["id"];
 
