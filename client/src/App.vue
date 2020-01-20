@@ -10,7 +10,6 @@
     </div>
     <div v-if="isLoggedIn" class="shop-name">
       <p> Texano Tire Shop <span style="color:hsl(217, 71%, 53%)">- owner</span></p>
-
     </div>
     <div class="navbar">
       <div class="navbar-menu">
@@ -47,7 +46,7 @@
                             v-model="signup.password"
                             type="password"
                             password-reveal
-                            placeholder="your password"
+                            placeholder="Your password"
                             required
                           ></b-input>
                         </b-field>
@@ -142,6 +141,7 @@ import { iAbout } from "../src/models/about.interface";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../src/utils/api.utils";
 import { iUser } from "./models/user.interface";
+import { iUserData } from "./models/userData.interface";
 import { log } from "util";
 
 @Component({
@@ -156,15 +156,22 @@ export default class App extends Vue {
 
   error: string | boolean = false;
   about: iAbout[] = [];
+  userData: iUserData[] = [];
   loginFailed: boolean = false;
   name: string = "";
   role: number = 0;
+
 
 
   signup: LoginForm = {
     emailAddress: "",
     password: ""
   };
+
+
+  autoSignIn(){
+    this.$store.state.userId = 1;
+  }
 
   getUserName() {
     this.error = false;
@@ -232,42 +239,91 @@ export default class App extends Vue {
     return !!this.$store.state.userId;
   }
 
+  getUserData(){
+    this.error = false
+
+    var userArray = [""];
+    return axios.get('https://texanotireshop.firebaseio.com/user.json')
+      .then(function(data)  {
+        return data.data;}).then(function(data) {
+          for (let key in data){
+            userArray.push(data[key]);
+        }
+          // userArray.push(userObj[0].userData);
+
+      userArray.shift();
+      return userArray;
+      
+    })
+
+  }
+
   login() {
-    this.error = false;
-    axios
-      .post(APIConfig.buildUrl("/login"), {
-        emailAddress: this.signup.emailAddress,
-        password: this.signup.password
-      })
-      .then((response: AxiosResponse<LoginResponse>) => {
+    
+    var emailAddress = "";
+    var password = "";
+
+    this.getUserData().then(data => {
+      console.log("User data");
+      console.log(data);
+
+      emailAddress = data[0];
+      password = data[4];
+
+      if(this.signup.emailAddress == emailAddress && this.signup.password == password){
+        console.log("found username");
+        this.$store.state.userId = 1;
+        this.signup.emailAddress = "";
+        this.signup.password = "";
         this.loginFailed = false;
-        this.$store.commit("login", {
-          token: response.data.token,
-          userid: response.data.userId
-        });
-        this.$store.commit("changeRole", {
-          userRole: this.role
-        });
-        this.$emit("success");
-        this.getUserName();
         this.$router.push({ path: "/" });
-      })
-      .catch((error: AxiosError) => {
+
+      }
+      else{
+        console.log("Cannot find user with that username");
         this.loginFailed = true;
-        console.log("Login Error");
-      });
+      }
+    });
+
+
+
+    //Gets Data Locally
+    // axios
+    //   .post(APIConfig.buildUrl("/login"), {
+    //     emailAddress: this.signup.emailAddress,
+    //     password: this.signup.password
+    //   })
+    //   .then((response: AxiosResponse<LoginResponse>) => {
+    //     this.loginFailed = false;
+    //     this.$store.commit("login", {
+    //       token: response.data.token,
+    //       userid: response.data.userId
+    //     });
+    //     this.$store.commit("changeRole", {
+    //       userRole: this.role
+    //     });
+    //     this.$emit("success");
+    //     this.getUserName();
+    //     this.$router.push({ path: "/" });
+    //   })
+    //   .catch((error: AxiosError) => {
+    //     this.loginFailed = true;
+    //     console.log("Login Error");
+    //   });
   }
 
   logout() {
-    debugger;
-    axios
-      .post(APIConfig.buildUrl("/logout"), null, {
-        headers: { token: this.$store.state.userToken }
-      })
-      .then(() => {
-        this.$store.commit("logout");
-        this.$router.push({ path: "/" });
-      });
+    this.$store.state.userId = 0;
+    this.$router.push({ path: "/" });
+    // debugger;
+    // axios
+    //   .post(APIConfig.buildUrl("/logout"), null, {
+    //     headers: { token: this.$store.state.userToken }
+    //   })
+    //   .then(() => {
+    //     this.$store.commit("logout");
+    //     this.$router.push({ path: "/" });
+    //   });
   }
 
 
