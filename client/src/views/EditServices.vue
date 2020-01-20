@@ -33,7 +33,7 @@
           <p>Price: <textarea class="service-desc" rows="1" style="width:180px" v-model="a.sePrice" required></textarea></p>
           <p>Description:</p>
           <p><textarea class="service-desc" rows="3" style="width:550px" v-model="a.seDescription" required> </textarea></p>
-          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, Number(a.sePrice), a.seDescription)">update</button>
+          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, Number(a.sePrice), a.seDescription, index)">update</button>
         </div>
       </article>
       </form>
@@ -206,21 +206,14 @@ export default class EditServices extends Vue {
         //   });
   }
 
-    updateService(idd: number, title: string, price: number, desc: string) {
-
-
-      //TODO:
-      //Loop thrugh key to get actual array postion of idd
-      //idd will not work if an item is deleted
-
-
-      var keyId = this.services[idd-1]["key"];
+    updateService(id: number, title: string, price: number, desc: string, index: number) {
+      // var keyId = this.services[id-1]["key"];
+      var keyId = this.services[index]["key"];
       var servicesKey = this.keyId;
 
-      console.log(price);
 
     axios.put('https://texanotireshop.firebaseio.com/services/' + servicesKey + '/' + keyId + '.json', {
-      id: idd,
+      id: id,
       seDescription: desc,
       sePrice: price,
       seTitle: title,
