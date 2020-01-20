@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isLoggedIn">
-  <div v-if="isLoggedIn" class="edit-services">
+  <!-- <div v-if="isLoggedIn"> -->
+  <div class="edit-services">
     <div class="add-service">
       <h1 style="font-size:200%; font-weight:bold">Edit Services:</h1>
       <div class="new-service">
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 
@@ -64,7 +64,7 @@ export default class EditServices extends Vue {
 
   addService(){
 
-
+    var self = this;
     axios.post('https://texanotireshop.firebaseio.com/services/' + this.keyId + '/' + '.json', {
         id: this.services.length+1,
         seTitle: this.seTitle,
@@ -73,11 +73,12 @@ export default class EditServices extends Vue {
     })
     .then(function (response) {
       console.log(response);
+      self.seTitle = "";
+      self.sePrice = 0;
+      self.seDescription = "";
+      self.refreshServices();
     })
-      this.seTitle = "";
-      this.sePrice = 0;
-      this.seDescription = "";
-      this.getAllServices();
+
 
     // axios
     //   .post(APIConfig.buildUrl("/newservice"), {
@@ -114,9 +115,8 @@ export default class EditServices extends Vue {
       console.log(this.services);
     });
   }
-    getAllServices() {
+  getAllServices() {
     this.error = false;
-
 
     var servicesArray = [""];
     
@@ -158,6 +158,23 @@ export default class EditServices extends Vue {
     //     this.error = res.response && res.response.data.error;
     //     console.log(this.error);
     //   });
+  }
+
+  refreshServices() {
+    this.services = [];
+    this.getAllServices().then(data => {
+      console.log("data");
+      this.keyId = data[0]["id"];
+
+      for (let key in data["0"]){
+          if(key != "id"){
+            data[0][key].key = key;
+            this.services.push(data[0][key]);
+          }
+      }
+
+      console.log(this.services);
+    });
   }
 
   deleteService(id: number){
