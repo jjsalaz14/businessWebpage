@@ -28,7 +28,7 @@
       <form>
       <article v-for="(a, index) in services" v-bind:key="index">
         <div class="box">
-          <button style="margin-left: 550px; " v-on:click="deleteService(a.id)">&times;</button>
+          <button style="margin-left: 550px; " v-on:click="deleteService(a.id, index)">&times;</button>
           <p> Title: <textarea class="service-desc" rows="1" style="width:180px"  v-model="a.seTitle" required></textarea></p>  
           <p>Price: <textarea class="service-desc" rows="1" style="width:180px" v-model="a.sePrice" required></textarea></p>
           <p>Description:</p>
@@ -177,10 +177,10 @@ export default class EditServices extends Vue {
     });
   }
 
-  deleteService(id: number){
+  deleteService(id: number, index: number){
 
-
-    var keyId = this.services[id-1]["key"];
+    var self = this;
+    var keyId = this.services[index]["key"];
 
     var servicesKey = this.keyId;
 
@@ -190,6 +190,7 @@ export default class EditServices extends Vue {
     async function makeRequest() {
       let res = await axios.delete('https://texanotireshop.firebaseio.com/services/' + servicesKey + '/' + keyId + '.json');
       console.log(res.status);
+      self.refreshServices();
     }
     makeRequest();
   
