@@ -1,5 +1,5 @@
 <template>
-  <!-- <div v-if="isLoggedIn"> -->
+  <div v-if="isLoggedIn">
   <div class="edit-services">
     <div class="add-service">
       <h1 style="font-size:200%; font-weight:bold">Edit Services:</h1>
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 

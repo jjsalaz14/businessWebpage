@@ -1,5 +1,5 @@
 <template>
-  <!-- <div v-if="isLoggedIn"> -->
+  <div v-if="isLoggedIn">
   <div class="edit-deals">
     <div class="add-deal">
       <h1 style="font-size:200%; font-weight:bold">Edit Coupons and Promotions:</h1>
@@ -35,7 +35,7 @@
    </div>
   </div>
 </div>
-<!-- </div> -->
+</div>
 
 </template>
 
