@@ -22,7 +22,8 @@
           <router-link style="width: 100px;" to="/about" tag="button" class="button is-info">Contact</router-link>
           <router-link style="width: 100px;" to="/services" tag="button" class="button is-info">Services</router-link>
           <router-link style="width: 100px;" to="/deals" tag="button" class="button is-info">Deals</router-link>
-          <b-dropdown style="margin-left: 560px" hoverable position="is-bottom-left">
+          <router-link style="width: 100px;" to="/inventory" tag="button" class="button is-info">Inventory</router-link>
+          <b-dropdown style="margin-left: 470px" hoverable position="is-bottom-left">
             <button class="button is-info" slot="trigger">
                 <span>Log In</span>
             </button>
