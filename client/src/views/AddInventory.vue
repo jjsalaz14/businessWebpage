@@ -22,12 +22,17 @@
             <p>Quantity:</p> 
             <textarea rows="2" style="width:220px" v-model="quantity" required></textarea>
             <br>
-            <p>Category:</p> 
-            <textarea rows="2" style="width:220px" placeholder="new/used/wheel" v-model="category" required></textarea>
-            <br>
             <p>Image:</p> 
             <textarea rows="2" style="width:220px" v-model="image" required></textarea>
             <br>
+            <p>Category:</p> 
+            <select v-model="category">
+              <option disabled value="">Select Item Category</option>
+              <option>New</option>
+              <option>Used</option>
+              <option>Wheel</option>
+            </select>
+            
           </div>
           <button style="width:10%; margin-left: 275px; margin-top: 20px">Add</button>
         </form>
