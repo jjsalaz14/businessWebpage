@@ -110,7 +110,20 @@
             </b-dropdown-item>
           </b-dropdown>
 
-        <button style="width: 100px; margin-left: 740px" class="button is-info" v-if="isLoggedIn" v-on:click="logout()">
+          <b-dropdown hoverable aria-role="list">
+            <button style="width: 100px;" class="button is-info" slot="trigger">
+                <span>Inventory</span>
+                
+            </button>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/inventory" exact-active-class="is-active"> View/Edit Inventory</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/add-inventory" exact-active-class="is-active"> Add Inventory</router-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
+        <button style="width: 100px; margin-left: 470px" class="button is-info" v-if="isLoggedIn" v-on:click="logout()">
           Log Out
         </button>
 
