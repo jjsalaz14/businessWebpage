@@ -26,7 +26,7 @@
             <textarea rows="2" style="width:220px" v-model="image" required></textarea>
             <br>
             <p>Category:</p> 
-            <select v-model="category">
+            <select required v-model="category">
               <option disabled value="">Select Item Category</option>
               <option>New</option>
               <option>Used</option>
