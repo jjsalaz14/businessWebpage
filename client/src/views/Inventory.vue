@@ -33,7 +33,7 @@
                             <p>Quantity:  <textarea class="service-desc" rows="1" style="width:166px"  v-model="a.quantity" required></textarea></p>
                             <p>{{a.category}}</p>
 
-                            <button type="button" style="margin-left: 100px; background-color: #48e319;border-radius: 12px;" v-on:click="updateInvenItem(index)">Update</button>
+                            <button type="button" style="margin-left: 100px; background-color: #48e319;border-radius: 12px;" v-on:click="updateInvenItem(a.size, a.brand, a.price, a.quantity, a.category, index)">Update</button>
                             <button type="button" style="margin-left: 30px; background-color: #ff3e3e; border-radius: 12px;" v-on:click="deleteInvenItem(index)">Delete</button>
                         </div>
                     </div>
@@ -108,6 +108,28 @@ export default class Services extends Vue {
       }
       makeRequest();
   
+    }
+
+    updateInvenItem(size: string, brand: string, price: number, quantity: number, category: string, index: number ) {
+      // var keyId = this.services[id-1]["key"];
+      var inventoryId = this.inventory[index]["key"];
+
+
+      axios.put('https://texanotireshop.firebaseio.com/inventory/' + inventoryId + '.json', {
+        size: size,
+        brand: brand, 
+        price: Number(price),
+        quantity: Number(quantity),
+        category: category,
+        image: "NA"
+      })
+      .then(function (response) {
+        console.log("Updated Item Successfully");
+      })
+      .catch(function(error){
+        console.log("Error Updating Item");
+        console.log(error);
+      });
     }
 
     refreshInventory() {
