@@ -2,6 +2,37 @@
     <div class="inventory"> 
         <div class="description">
             <h1 style="font-size:200%; font-weight:bold">Items Available:</h1><br>
+            
+            <div class="filter-by">
+            <h1><u>Filter By:</u></h1><br>
+            <p>Brand:</p> 
+              <select v-model="brandChoosen" >
+                <option
+                  v-for="selectedBrand in allBrand"
+                  v-bind:key="selectedBrand"
+                  :value="selectedBrand"
+                >{{selectedBrand}}</option>
+              </select>
+            <p>Size:</p> 
+              <select v-model="sizeChoosen" >
+                <option
+                  v-for="selectedSize in allSize"
+                  v-bind:key="selectedSize"
+                  :value="selectedSize"
+                >{{selectedSize}}</option>
+              </select>
+             <p>Category:</p> 
+              <select v-model="categoryChoosen" >
+                <option
+                  v-for="selectedCategory in allCategories"
+                  v-bind:key="selectedCategory"
+                  :value="selectedCategory"
+                >{{selectedCategory}}</option>
+              </select>
+              <div>
+                <button type="button" style="margin-left: 100px;border-radius: 12px;" v-on:click="filterItems()">Filter</button>
+              </div>
+            </div>
 
             <!-- Customer view -->
             <div v-if="!isLoggedIn" class="margin">
@@ -14,10 +45,12 @@
                             <p>Price:  ${{a.price}}</p>
                             <p>Quantity:  {{a.quantity}}</p>
                             <p>{{a.category}}</p>
-
                         </div>
                     </div>
                 </article>
+                <div v-if="inventory.length==0">
+                  <h1 style="padding-left: 100px; font-size: 24px">No Items Found</h1>
+                </div>
             </div>
 
             <!-- Owner View -->
@@ -56,7 +89,14 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class Services extends Vue {
   error: string | boolean = false;
   inventory: iInventory[] = [];
+  allInventory: iInventory[] = [];
   keyId: string = "";
+  brandChoosen: string = "ALL";
+  categoryChoosen: string = "ALL";
+  sizeChoosen: string = "ALL";
+  allBrand = ["ALL"];
+  allCategories = ["ALL", "NEW", "USED", "WHEEL"];
+  allSize = ["ALL"];
 
   created() {
     this.getInventory().then(data => {
@@ -65,13 +105,33 @@ export default class Services extends Vue {
         this.inventory.push(data[String(key)]);
       }
       console.log(this.inventory);
+      this.allInventory = this.inventory;
     });
+  }
+
+  filterItems(){
+    console.log(this.sizeChoosen);
+    console.log(this.categoryChoosen);
+    console.log(this.brandChoosen);
+    this.inventory = [];
+    var i = 0;
+    for(i = 0; i < this.allInventory.length; i++){
+      if(this.brandChoosen == "ALL" || this.allInventory[i].brand.toUpperCase() == this.brandChoosen){
+        if(this.sizeChoosen == "ALL" || this.allInventory[i].size.slice(-2) == this.sizeChoosen){
+            if(this.categoryChoosen == "ALL" || this.allInventory[i].category.toUpperCase() == this.categoryChoosen){
+                 this.inventory.push(this.allInventory[i]);
+            }
+        }       
+      }      
+    }
+    console.log()
   }
 
   getInventory() {
     this.error = false;
 
     var inventoryArray = [""];
+    var self = this;
     
 
     return axios.get('https://texanotireshop.firebaseio.com/inventory.json')
@@ -83,14 +143,31 @@ export default class Services extends Vue {
           data[key].initialIndex = i;
           i = i + 1;
           inventoryArray.push(data[key]);
+          self.allBrand.push(data[key].brand.toUpperCase());
+          self.allSize.push(data[key].size.slice(-2));
           //console.log(key);
         }
         //Remove "" element in array
         inventoryArray.shift();
-        //console.log(inventoryArray);
+
+        self.allSize = self.uniqueItem(self.allSize);
+        self.allBrand = self.uniqueItem(self.allBrand);
+        console.log(self.allSize);
       return inventoryArray;
       
       })
+    }
+
+    uniqueItem(array: any){
+      var uniqueArray = [""];
+      var i = 0;
+      for(i = 0; i < array.length; i++){
+        if(!uniqueArray.includes(array[i])){
+          uniqueArray.push(array[i]);
+        }
+      }
+      uniqueArray.shift();
+      return uniqueArray;
     }
 
 
@@ -138,7 +215,9 @@ export default class Services extends Vue {
         for (let key in data){
           this.inventory.push(data[String(key)]);
         }
-        console.log(this.inventory);  
+        console.log(this.inventory); 
+        this.allInventory = this.inventory; 
+        this.filterItems();
     });
   }
 
@@ -174,6 +253,11 @@ export default class Services extends Vue {
         border: 1px solid rgb(156, 153, 153);
         padding: 10px;
         text-align: left;
+    }
+    .filter-by {
+      float: left;
+      border: 1px solid black;
+      padding: 20px;
     }
 
 </style>
