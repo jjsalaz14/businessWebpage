@@ -38,7 +38,7 @@
             <div v-if="!isLoggedIn" class="margin">
                 <article v-for="(a, index) in inventory" v-bind:key="index">
                     <div class="item-box">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/inventoryTire.png?alt=media&token=7f642799-37ce-4a55-a2af-e88bb25f218e"  width="200" height="200">
+                        <img :src="a.image"  width="200" height="200">
                         <div class="item-info">
                             <p>Size:  {{a.size}}</p>
                             <p>Brand:  {{a.brand}}</p>
@@ -48,9 +48,8 @@
                         </div>
                     </div>
                 </article>
-                <div v-if="inventory.length==0">
-                  <h1 style="padding-left: 100px; font-size: 24px">No Items Found</h1>
-                </div>
+                  <h1 style="padding-left: 100px; font-size: 24px">Item Not In Stock</h1>
+                  <h1 style="padding-left: 100px; font-size: 24px">Give Us A Call To Order It</h1>
             </div>
 
             <!-- Owner View -->
@@ -58,7 +57,7 @@
                 <article v-for="(a, index) in inventory" v-bind:key="index">
                     <form>
                     <div class="item-box">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/texanotireshop.appspot.com/o/inventoryTire.png?alt=media&token=7f642799-37ce-4a55-a2af-e88bb25f218e"  width="200" height="200">
+                        <img :src="a.image" width="200" height="200">
                         <div class="item-info">
                             <p>Size:  <textarea class="service-desc" rows="1" style="width:200px"  v-model="a.size" required></textarea></p>
                             <p>Brand:  <textarea class="service-desc" rows="1" style="width:186px"  v-model="a.brand" required></textarea></p>
@@ -72,6 +71,10 @@
                     </div>
                     </form>
                 </article>
+                <div v-if="inventory.length==0">
+                  <h1 style="padding-left: 100px; font-size: 24px">Item Not In Stock</h1>
+                  <h1 style="padding-left: 100px; font-size: 24px">Give Us A Call To Order It</h1>
+                </div>
             </div>
 
         </div>
@@ -258,6 +261,11 @@ export default class Services extends Vue {
       float: left;
       border: 1px solid black;
       padding: 20px;
+    }
+    img {
+      width:200px;
+      height:200px;
+      object-fit:cover;
     }
 
 </style>
