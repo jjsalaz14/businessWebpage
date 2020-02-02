@@ -48,8 +48,10 @@
                         </div>
                     </div>
                 </article>
+                <div v-if="inventory.length==0">
                   <h1 style="padding-left: 100px; font-size: 24px">Item Not In Stock</h1>
                   <h1 style="padding-left: 100px; font-size: 24px">Give Us A Call To Order It</h1>
+                </div>
             </div>
 
             <!-- Owner View -->
