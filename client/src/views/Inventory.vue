@@ -43,7 +43,8 @@
                             <p>Size:  {{a.size}}</p>
                             <p>Brand:  {{a.brand}}</p>
                             <p>Price:  ${{a.price}}</p>
-                            <p>Quantity:  {{a.quantity}}</p>
+                            <p v-if="Number(a.quantity)<10">Low In Stock</p>
+                            <p v-if="Number(a.quantity)>=10">In Stock</p>
                             <p>{{a.category}}</p>
                         </div>
                     </div>
