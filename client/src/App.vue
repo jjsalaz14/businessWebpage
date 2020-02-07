@@ -113,7 +113,6 @@
           <b-dropdown hoverable aria-role="list">
             <button style="width: 100px;" class="button is-info" slot="trigger">
                 <span>Inventory</span>
-                
             </button>
             <b-dropdown-item aria-role="listitem">
               <router-link to="/inventory" exact-active-class="is-active"> View/Edit Inventory</router-link>
@@ -122,6 +121,18 @@
               <router-link to="/add-inventory" exact-active-class="is-active"> Add Inventory</router-link>
             </b-dropdown-item>
           </b-dropdown>
+
+          <b-dropdown hoverable aria-role="list">
+            <button style="width: 100px;" class="button is-info" slot="trigger">
+                <span>Transactions</span>
+            </button>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/add-transaction" exact-active-class="is-active"> Add Transaction</router-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
+
+        
 
         <button style="width: 100px; margin-left: 470px" class="button is-info" v-if="isLoggedIn" v-on:click="logout()">
           Log Out
