@@ -8,6 +8,7 @@
                     <form v-on:submit.prevent="addToCart()">
                     <h1 style="font-size:120%; font-weight:bold"><u>Add New Transaction</u></h1>
                     <br>
+                    <p v-if="error" style="color:red">{{errorMsg}}</p>
                     <p>Type:</p> 
                     <select required v-model="category">
                         <option disabled value="">Select Type Of Transaction</option>
@@ -53,7 +54,8 @@ import { log } from "util";
 
 @Component({})
 export default class AddTransaction extends Vue {
-    error: string | boolean = false;
+    error: boolean = false;
+    errorMsg: string = "";
     description: string = "";
     amount: number = 0;
     category: string = "";
@@ -95,7 +97,19 @@ export default class AddTransaction extends Vue {
 
 
   addToCart(){
-      console.log("Add to cart");
+      if(isNaN(Number(this.amount)) || isNaN(Number(this.quantity))){
+        this.error = true;
+        this.errorMsg = "Error: Not A Number";
+      }
+      else if(Number(this.amount) <= 0 || Number(this.quantity) <= 0){
+        this.error = true;
+        this.errorMsg = "Error: Number Has To Be Greater Than 0";
+      }
+      else {
+          this.error = false;
+         console.log("Added to cart");
+      }
+
   }
 
   get isLoggedIn(): boolean {
