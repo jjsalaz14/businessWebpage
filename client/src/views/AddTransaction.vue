@@ -1,5 +1,4 @@
 <template>
-
     <div v-if="isLoggedIn">
         <div class="add-transaction">
             <div>
@@ -43,6 +42,7 @@
         <div class="cart-list">
             <br><br>
             <h1 style="font-size:120%; font-weight:bold"><u>Items In Cart:</u></h1>
+            <p v-if="transactions.length==0" style="color:green"><br>{{cartMsg}}</p>
             <article v-for="(a, index) in transactions" v-bind:key="index">
                 <p> {{a.category}} </p>
                 <p> {{a.description}} </p>
@@ -51,7 +51,7 @@
                 <p>----------------------------------------</p>
             </article>
             <p v-if="transactions.length>0">Total Expenses = {{getExpenses()}}</p>
-            <p v-if="transactions.length>0">Total Revenue= {{getRevenue()}}</p>
+            <p v-if="transactions.length>0">Total Revenue = {{getRevenue()}}</p>
             <button v-if="transactions.length>0" @click="completeOrder" style="width:40%; margin-left: 213px; margin-top: 20px">Complete Order</button>
             <br><br><br><br><br>
             </div>
@@ -72,6 +72,7 @@ import { log } from "util";
 export default class AddTransaction extends Vue {
     error: boolean = false;
     errorMsg: string = "";
+    cartMsg: string = "No Items In Cart";
     description: string = "";
     amount: number = 0;
     category: string = "";
@@ -113,7 +114,25 @@ export default class AddTransaction extends Vue {
     }
 
     completeOrder(){
-        console.log("complete order");
+        console.log("Order Completed");
+        var self = this;
+        let i = 0;
+        for(i=0; i<this.transactions.length;i++){
+            axios.post('https://texanotireshop.firebaseio.com/transactions.json', {
+                description: self.transactions[i].description,
+                amount: Number(self.transactions[i].amount),
+                category: self.transactions[i].category,
+                date: self.transactions[i].date,
+                inventoryId: self.transactions[i].inventoryId,
+                quantity: Number(self.transactions[i].quantity)
+            })
+            .then(function (response) {
+            console.log(response);
+                self.transactions = [];
+                self.cartMsg = "Items Added To Transactions Successfully";
+                //TODO: UPDATE ITEMS QUANTITY FROM INVENTORY 
+            })
+        }
     }
 
     getTotalInCart(){
@@ -155,19 +174,18 @@ export default class AddTransaction extends Vue {
         else {
             this.error = false;
             console.log("Added to cart");
-
             this.transactions.push(this.newTrans());
 
-            console.log(this.transactions);
-
+            this.category = "";
+            this.amount = 0;
+            this.quantity = 0;
+            this.description = "";
         }
 
   }
 
 
-
   newTrans(): iTransactions {
-
     let today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
