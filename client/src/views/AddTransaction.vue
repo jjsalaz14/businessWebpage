@@ -38,6 +38,7 @@
                 </div>
             </div>
             
+            <br><br>
             <div class="add-trans-inventory">
                 <h1 style="font-size:120%; font-weight:bold"><u>Select Item From Inventory</u>
                     <p v-if="quantityError" style="color:red">{{quantityErrorMsg}}</p>
@@ -102,22 +103,23 @@
 
             </div>
         </div>
-
-        <div class="cart-list">
-            <br><br>
-            <h1 style="font-size:120%; font-weight:bold"><u>Items In Cart:</u></h1>
-            <p v-if="transactions.length==0" style="color:green"><br>{{cartMsg}}</p>
-            <article v-for="(a, index) in transactions" v-bind:key="index">
-                <p> {{a.category}} </p>
-                <p> {{a.description}} </p>
-                <p> Quantity: {{a.quantity}} </p>
-                <p> Amount: {{a.amount}} </p>
-                <p>----------------------------------------</p>
-            </article>
-            <p v-if="transactions.length>0">Total Expenses = {{getExpenses()}}</p>
-            <p v-if="transactions.length>0">Total Revenue = {{getRevenue()}}</p>
-            <button v-if="transactions.length>0" @click="completeOrder" style="width:40%; margin-left: 213px; margin-top: 20px">Complete Order</button>
-            <br><br><br><br><br>
+        <div class="cart-box">
+            <div class="cart-list">
+                <br><br>
+                <h1 style="font-size:120%; font-weight:bold"><u>Items In Cart:</u></h1>
+                <p v-if="transactions.length==0" style="color:green"><br>{{cartMsg}}</p>
+                <article v-for="(a, index) in transactions" v-bind:key="index">
+                    <p> {{a.category}} </p>
+                    <p> {{a.description}} </p>
+                    <p> Quantity: {{a.quantity}} </p>
+                    <p> Amount: {{a.amount}} </p>
+                    <p>----------------------------------------</p>
+                </article>
+                <p v-if="transactions.length>0">Total Expenses = {{getExpenses()}}</p>
+                <p v-if="transactions.length>0">Total Revenue = {{getRevenue()}}</p>
+                <button v-if="transactions.length>0" @click="completeOrder" style="width:40%; margin-left: 213px; margin-top: 20px">Complete Order</button>
+                <br><br><br><br><br>
+            </div>
         </div>
 
  </div>
@@ -384,10 +386,14 @@ export default class AddTransaction extends Vue {
     }
 
     .cart-list{
-        padding-top: 112px;
-        padding-left: 5px;
+        padding-top: 5px;
+        padding-left: 25px;
         padding-right: 100px;
         float: right;
+        width: 500px;
+        height: 430px;
+        overflow: auto;
+
     }
 
     .add-trans-inventory {
@@ -417,8 +423,14 @@ export default class AddTransaction extends Vue {
     }
     .inventory {
         float: right;
-        float: below;
-        
+    }
+    .cart-box {
+        position: absolute;
+        top: 220px;
+        right: 50px;
+        width: 500px;
+        height: 450px;
+        border: 2px solid black;
     }
 
 </style>
