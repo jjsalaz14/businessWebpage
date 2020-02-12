@@ -1,124 +1,129 @@
 <template>
     <div v-if="isLoggedIn">
-        <div class="add-transaction">
-            <div>
-                <h1 style="font-size:200%; font-weight:bold">New Transaction:</h1>
-                <div class="new-transaction">
-                    <form v-on:submit.prevent="addToCart()">
-                    <h1 style="font-size:120%; font-weight:bold"><u>Create New Transaction</u></h1>
-                    <br>
-                    <p v-if="error" style="color:red">{{errorMsg}}</p>
-                    <p>Type:</p> 
-                    <select required v-model="category">
-                        <option disabled value="">Select Type Of Transaction</option>
-                        <option>Expense</option>
-                        <option>Revenue</option>
-                    </select>
-                    <br>
-                    <p>Amount:</p>
-                    <textarea rows="2" style="width:220px" v-model="amount" required></textarea>
-                    <br>
-                    <p>Quantity:</p> 
-                    <textarea rows="2" style="width:220px" v-model="quantity" required></textarea>
-                    <br>
-                    <p>Add A Description:</p>
-                    <p>(Or Select Services)</p>
-                    <textarea rows="10" style="width:300px" v-model="description" required></textarea>
-                    <br>
-                    <select  v-model="description">
-                        <option disabled value="">Select Service</option>
-                        <option
-                            v-for="selectedService in services"
-                            v-bind:key="selectedService"
-                            :value="selectedService"
-                            >{{selectedService}}</option>
+        <div class="first-div">
+            <div class="add-transaction">
+                <div>
+                    <h1 style="font-size:200%; font-weight:bold">New Transaction:</h1>
+                    <div class="new-transaction">
+                        <form v-on:submit.prevent="addToCart()">
+                        <h1 style="font-size:120%; font-weight:bold"><u>Create New Transaction</u></h1>
+                        <br>
+                        <p v-if="error" style="color:red">{{errorMsg}}</p>
+                        <p>Type:</p> 
+                        <select required v-model="category">
+                            <option disabled value="">Select Type Of Transaction</option>
+                            <option>Expense</option>
+                            <option>Revenue</option>
                         </select>
-                    <button style="width:20%; margin-left: 213px; margin-top: 20px">Add To Cart</button>
-                    </form>
-                </div>
-            </div>
-            
-            <br><br>
-            <div class="add-trans-inventory">
-                <h1 style="font-size:120%; font-weight:bold"><u>Select Item From Inventory</u>
-                    <p v-if="quantityError" style="color:red">{{quantityErrorMsg}}</p>
-                    <p v-if="addInvSuccess" style="color:green">{{addInvSuccessMsg}}</p>
-                </h1>
-                <br>
-            
-            <div class="filter-by">
-            <h1><u>Select One:</u></h1><br>
-            <p>Brand:</p> 
-              <select v-model="brandChoosen" >
-                <option
-                  v-for="selectedBrand in allBrand"
-                  v-bind:key="selectedBrand"
-                  :value="selectedBrand"
-                >{{selectedBrand}}</option>
-              </select>
-            <p>Size:</p> 
-              <select v-model="sizeChoosen" >
-                <option
-                  v-for="selectedSize in allSize"
-                  v-bind:key="selectedSize"
-                  :value="selectedSize"
-                >{{selectedSize}}</option>
-              </select>
-             <p>Category:</p> 
-              <select v-model="categoryChoosen" >
-                <option
-                  v-for="selectedCategory in allCategories"
-                  v-bind:key="selectedCategory"
-                  :value="selectedCategory"
-                >{{selectedCategory}}</option>
-              </select>
-              <div>
-                <button type="button" style="margin-left: 100px;border-radius: 12px;" v-on:click="showItems()">Select</button>
-              </div>
-            </div>
-
-            <div class="inventory">
-                <article v-for="(a, index) in inventory" v-bind:key="index">
-                    <div class="item-box">
-                        <img :src="a.image"  width="200" height="200">
-                        <div class="item-info">
-                            <p>Size:  {{a.size}}</p>
-                            <p>Brand:  {{a.brand}}</p>
-                            <p>Price:  ${{a.price}}</p>
-                            <p>Quantity: {{a.quantity}}</p>
-                            <p>{{a.category}}</p>
-                        </div>
-                        
-                        <form v-on:submit.prevent="addToCartFromInven(a.size, a.brand, a.price, a.quantity, a.category, index,a.key)">
-
-                            <p>Number Of Items To Add: <textarea rows="1" style="width:50px"  v-model="itemsToAdd" required></textarea></p>
-                            <button style="margin-left: 20px;border-radius: 12px;">Add To Cart</button>
+                        <br>
+                        <p>Amount:</p>
+                        <textarea rows="2" style="width:220px" v-model="amount" required></textarea>
+                        <br>
+                        <p>Quantity:</p> 
+                        <textarea rows="2" style="width:220px" v-model="quantity" required></textarea>
+                        <br>
+                        <p>Add A Description:</p>
+                        <p>(Or Select Services)</p>
+                        <textarea rows="10" style="width:300px" v-model="description" required></textarea>
+                        <br>
+                        <select  v-model="description">
+                            <option disabled value="">Select Service</option>
+                            <option
+                                v-for="selectedService in services"
+                                v-bind:key="selectedService"
+                                :value="selectedService"
+                                >{{selectedService}}</option>
+                            </select>
+                        <button style="width:20%; margin-left: 213px; margin-top: 20px">Add To Cart</button>
                         </form>
                     </div>
-                </article>
-                <div v-if="inventory.length==0">
-                  <h1 style="padding-left: 100px; font-size: 24px">Select An Item</h1>
                 </div>
             </div>
-
+            <div class="cart-box">
+                <div class="cart-list">
+                    <br><br>
+                    <h1 style="font-size:120%; font-weight:bold"><u>Items In Cart:</u></h1>
+                    <p v-if="transactions.length==0" style="color:green"><br>{{cartMsg}}</p>
+                    <article v-for="(a, index) in transactions" v-bind:key="index">
+                        <p> {{a.category}} </p>
+                        <p> {{a.description}} </p>
+                        <p> Quantity: {{a.quantity}} </p>
+                        <p> Amount: {{a.amount}} </p>
+                        <p>----------------------------------------</p>
+                    </article>
+                    <p v-if="transactions.length>0">Total Expenses = {{getExpenses()}}</p>
+                    <p v-if="transactions.length>0">Total Revenue = {{getRevenue()}}</p>
+                    <button v-if="transactions.length>0" @click="completeOrder" style="width:40%; margin-left: 213px; margin-top: 20px">Complete Order</button>
+                    <br><br><br><br><br>
+                </div>
             </div>
-        </div>
-        <div class="cart-box">
-            <div class="cart-list">
+        </div >
+        <div class="show-items">
+            <div>
                 <br><br>
-                <h1 style="font-size:120%; font-weight:bold"><u>Items In Cart:</u></h1>
-                <p v-if="transactions.length==0" style="color:green"><br>{{cartMsg}}</p>
-                <article v-for="(a, index) in transactions" v-bind:key="index">
-                    <p> {{a.category}} </p>
-                    <p> {{a.description}} </p>
-                    <p> Quantity: {{a.quantity}} </p>
-                    <p> Amount: {{a.amount}} </p>
-                    <p>----------------------------------------</p>
-                </article>
-                <p v-if="transactions.length>0">Total Expenses = {{getExpenses()}}</p>
-                <p v-if="transactions.length>0">Total Revenue = {{getRevenue()}}</p>
-                <button v-if="transactions.length>0" @click="completeOrder" style="width:40%; margin-left: 213px; margin-top: 20px">Complete Order</button>
-                <br><br><br><br><br>
+                <div class="add-trans-inventory">
+                    <h1 style="font-size:120%; font-weight:bold"><u>Select Item From Inventory</u>
+                        <p v-if="quantityError" style="color:red">{{quantityErrorMsg}}</p>
+                        <p v-if="addInvSuccess" style="color:green">{{addInvSuccessMsg}}</p>
+                    </h1>
+                    <br>
+                
+                <div class="filter-by">
+                <h1><u>Select One:</u></h1><br>
+                <p>Brand:</p> 
+                <select v-model="brandChoosen" >
+                    <option
+                    v-for="selectedBrand in allBrand"
+                    v-bind:key="selectedBrand"
+                    :value="selectedBrand"
+                    >{{selectedBrand}}</option>
+                </select>
+                <p>Size:</p> 
+                <select v-model="sizeChoosen" >
+                    <option
+                    v-for="selectedSize in allSize"
+                    v-bind:key="selectedSize"
+                    :value="selectedSize"
+                    >{{selectedSize}}</option>
+                </select>
+                <p>Category:</p> 
+                <select v-model="categoryChoosen" >
+                    <option
+                    v-for="selectedCategory in allCategories"
+                    v-bind:key="selectedCategory"
+                    :value="selectedCategory"
+                    >{{selectedCategory}}</option>
+                </select>
+                <div>
+                    <button type="button" style="margin-left: 100px;border-radius: 12px;" v-on:click="showItems()">Select</button>
+                </div>
+                </div>
+
+                <div class="container">
+                    <article v-for="(a, index) in inventory" v-bind:key="index">
+                        <div class="item-box">
+                            <img :src="a.image"  width="200" height="200">
+                            <div class="item-info">
+                                <p>Size:  {{a.size}}</p>
+                                <p>Brand:  {{a.brand}}</p>
+                                <p>Price:  ${{a.price}}</p>
+                                <p>Quantity: {{a.quantity}}</p>
+                                <p>{{a.category}}</p>
+                            </div>
+                            
+                            <form v-on:submit.prevent="addToCartFromInven(a.size, a.brand, a.price, a.quantity, a.category, index,a.key)">
+
+                                <p>Number Of Items To Add: <textarea rows="1" style="width:50px"  v-model="itemsToAdd" required></textarea></p>
+                                <button style="margin-left: 20px;border-radius: 12px;">Add To Cart</button>
+                            </form>
+                        </div>
+                    </article>
+                    <div v-if="inventory.length==0">
+                        <h1 style="padding-left: 250px; font-size: 24px">Select An Item</h1>
+                    </div>
+                </div>
+
+                </div>
             </div>
         </div>
 
@@ -284,7 +289,33 @@ export default class AddTransaction extends Vue {
                 self.cartMsg = "Items Added To Transactions Successfully";
                 //TODO: UPDATE ITEMS QUANTITY FROM INVENTORY 
             })
+            
+            if(this.transactions[i].inventoryId != "NA"){
+                //TODO - update item in firebase
+                var inventoryId = this.inventory[i]["key"];
+                let index = this.inventory[i]["initialIndex"];
+
+                console.log(this.inventory[i]);
+                axios.put('https://texanotireshop.firebaseio.com/inventory/' + inventoryId + '.json', {
+                    size: this.inventory[i].size,
+                    brand: this.inventory[i].brand, 
+                    price: Number(this.inventory[i].price),
+                    quantity: Number(this.inventory[i].quantity),
+                    category: this.inventory[i].category,
+                    image: this.inventory[i].image
+                })
+                .then(function (response) {
+                    console.log("Updated Item Successfully");
+                    self.transactions = [];
+                    self.cartMsg = "Items Added To Transactions Successfully";
+                })
+                .catch(function(error){
+                    console.log("Error Updating Item");
+                    console.log(error);
+                });
+            }
         }
+
     }
 
     getTotalInCart(){
@@ -344,8 +375,9 @@ export default class AddTransaction extends Vue {
       else{
           this.quantityError = false;
           this.addInvSuccess = true;
-          this.transactions.push(this.newTrans(category+" "+brand+" "+size, price*this.itemsToAdd, "Expense", key, this.itemsToAdd));
-          this.allInventory[index].quantity -= this.itemsToAdd;
+          this.transactions.push(this.newTrans(category+" "+brand+" "+size, price*this.itemsToAdd, "Revenue", key, this.itemsToAdd));
+          this.inventory[index].quantity -= this.itemsToAdd;
+          console.log(this.inventory[index]);
       }
       // itemsToAdd
   }
@@ -375,6 +407,7 @@ export default class AddTransaction extends Vue {
 </script>
 
 <style scoped>
+
     .add-transaction {
         padding-top: 44px;
         padding-left: 70px;
@@ -386,10 +419,11 @@ export default class AddTransaction extends Vue {
     }
 
     .cart-list{
+        position: absolute;
         padding-top: 5px;
         padding-left: 25px;
         padding-right: 100px;
-        float: right;
+
         width: 500px;
         height: 430px;
         overflow: auto;
@@ -397,8 +431,8 @@ export default class AddTransaction extends Vue {
     }
 
     .add-trans-inventory {
-        padding-top: 44px;
-        padding-left: 50px;
+        padding-top: 100px;
+        padding-left: 120px;
         float: left;
     }
 
@@ -423,15 +457,19 @@ export default class AddTransaction extends Vue {
     }
     .inventory {
         float: right;
+    
     }
+
     .cart-box {
         position: absolute;
         top: 220px;
         right: 50px;
         width: 500px;
         height: 450px;
+
         border: 2px solid black;
-    }
+    } 
+
 
 </style>
 
