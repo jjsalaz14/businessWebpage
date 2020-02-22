@@ -13,22 +13,22 @@
                             >{{selectedDay}}
                         </option>
                     </select>
-                <!-- <p>Week:</p> 
-                    <select v-model="brandChoosen" >
+                <p>Week:</p> 
+                    <select v-model="weekChoosen" >
                         <option
-                            v-for="selectedBrand in allBrand"
-                            v-bind:key="selectedBrand"
-                            :value="selectedBrand"
-                            >{{selectedBrand}}
+                            v-for="selectedWeek in allWeeks"
+                            v-bind:key="selectedWeek"
+                            :value="selectedWeek"
+                            >{{selectedWeek}}
                         </option>
-                    </select> -->
+                    </select>
                 <p>Month:</p> 
                     <select v-model="monthChoosen" >
                         <option
                             v-for="selectedMonth in allMonths"
                             v-bind:key="selectedMonth"
                             :value="selectedMonth"
-                            >{{MONTHS[Number(selectedMonth)-1]}}
+                            >{{MONTHS[Number(selectedMonth)]}}
                         </option>
                     </select>
                 <p>Year:</p> 
@@ -110,14 +110,16 @@ export default class Transactions extends Vue {
     monthChoosen: string = "ALL";
     yearChoosen: string = "ALL";
     categoryChoosen: string = "ALL";
+    weekChoosen: string = "ALL";
     totalRevenue: number = 0;
     totalCost: number = 0;
     totalProfit: number = 0;
     allDays = ["ALL"];
     allMonths = ["ALL"];
     allYears = ["ALL"];
+    allWeeks = ["ALL"];
     allCategories = ["ALL", "Expense", "Revenue"]
-    MONTHS = ["January", "February", "March", "April", "May", "June",
+    MONTHS = ["ALL","January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"]
     created() {
         this.getTransactions().then(data => {
@@ -125,7 +127,7 @@ export default class Transactions extends Vue {
             for (let key in data){
                 this.transactions.push(data[String(key)]);
         }
-        console.log(this.transactions);
+        console.log(this.allMonths);
         this.allTransactions = this.transactions;
         });
     }
@@ -145,6 +147,10 @@ export default class Transactions extends Vue {
                 self.allDays.push(data[key].date);
                 self.allMonths.push(data[key].date.slice(0,2));
                 self.allYears.push(data[key].date.slice(6,10));
+                
+                if(self.dayOfWeek(data[key].date)==1){
+                    self.allWeeks.push(data[key].date);
+                }
             }
             //Remove "" element in array
             transArray.shift();
@@ -195,6 +201,15 @@ export default class Transactions extends Vue {
             }
         }
         return total;
+    }
+
+    dayOfWeek(input: string){
+        let day = input.slice(3,5)
+        let month = this.MONTHS[Number(input.slice(0,2))];
+        let year = input.slice(6,10);
+        const dayString = new Date(month + ' ' + day + ',' + year + ' 00:00:01');
+        const dayNum = dayString.getDay();
+        return dayNum;
     }
 
 
