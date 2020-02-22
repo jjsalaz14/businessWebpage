@@ -1,5 +1,5 @@
 <template>
-    <div class="transactions"> 
+    <div v-if="isLoggedIn" class="transactions"> 
         <div class="description">
             <h1 style="font-size:200%; font-weight:bold">Transactions:</h1><br>
             <div class="filter-by">
@@ -228,6 +228,10 @@ export default class Transactions extends Vue {
                 }
             }
         }
+    }
+
+    get isLoggedIn(): boolean {
+        return !!this.$store.state.userId;
     }
 }
 
