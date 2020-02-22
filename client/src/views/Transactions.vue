@@ -13,7 +13,7 @@
                             >{{selectedDay}}
                         </option>
                     </select>
-                <p>Week:</p> 
+                <!-- <p>Week:</p> 
                     <select v-model="weekChoosen" >
                         <option
                             v-for="selectedWeek in allWeeks"
@@ -21,7 +21,7 @@
                             :value="selectedWeek"
                             >{{selectedWeek}}
                         </option>
-                    </select>
+                    </select> -->
                 <p>Month:</p> 
                     <select v-model="monthChoosen" >
                         <option
@@ -212,8 +212,27 @@ export default class Transactions extends Vue {
         return dayNum;
     }
 
+    filterItems(){
 
+        this.transactions = [];
+        var i = 0;
+        for(i = 0; i < this.allTransactions.length; i++){
+            console.log(this.monthChoosen);
+            if(this.monthChoosen == "ALL" || Number(this.allTransactions[i].date.slice(0,2)) == Number(this.monthChoosen)){
+                if(this.dayChoosen == "ALL" || this.allTransactions[i].date == this.dayChoosen){
+                    if(this.categoryChoosen == "ALL" || this.allTransactions[i].category == this.categoryChoosen){
+                        if(this.yearChoosen == "ALL" || this.allTransactions[i].date.slice(6,10) == this.yearChoosen){
+                            this.transactions.push(this.allTransactions[i]);
+                        }   
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+
 </script>
 
 
