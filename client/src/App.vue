@@ -129,6 +129,9 @@
             <b-dropdown-item aria-role="listitem">
               <router-link to="/add-transaction" exact-active-class="is-active"> Add Transaction</router-link>
             </b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">
+              <router-link to="/transactions" exact-active-class="is-active"> View Transactions</router-link>
+            </b-dropdown-item>
           </b-dropdown>
 
 

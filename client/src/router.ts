@@ -94,6 +94,15 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "add-transaction" */ "./views/AddTransaction.vue")
+    },
+    {
+      path: "/transactions",
+      name: "transactions",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "transactions" */ "./views/Transactions.vue")
     }
 
   ]
