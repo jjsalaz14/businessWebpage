@@ -287,11 +287,9 @@ export default class AddTransaction extends Vue {
             console.log(response);
                 self.transactions = [];
                 self.cartMsg = "Items Added To Transactions Successfully";
-                //TODO: UPDATE ITEMS QUANTITY FROM INVENTORY 
             })
             
             if(this.transactions[i].inventoryId != "NA"){
-                //TODO - update item in firebase
                 var inventoryId = this.inventory[i]["key"];
                 let index = this.inventory[i]["initialIndex"];
 
