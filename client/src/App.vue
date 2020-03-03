@@ -23,17 +23,17 @@
           <router-link style="width: 100px;" to="/services" tag="button" class="button is-info">Services</router-link>
           <router-link style="width: 100px;" to="/deals" tag="button" class="button is-info">Deals</router-link>
           <router-link style="width: 100px;" to="/inventory" tag="button" class="button is-info">Inventory</router-link>
-          <b-dropdown style="margin-left: 470px" hoverable position="is-bottom-left">
+          <b-dropdown style="margin-left: 470px"  position="is-bottom-left">
             <button class="button is-info" slot="trigger">
                 <span>Log In</span>
             </button>
-          <b-dropdown-item custom paddingless>
+          <b-dropdown-item  custom paddingless>
                   <form @submit.prevent="login">
                     <div class="modal-card" style="width:300px; ">
                       <section class="modal-card-body">
                         <b-notification v-if="loginFailed" type="is-danger">Incorrect ID or Password</b-notification>
                         
-                        <b-field label="Username">
+                        <b-field class="username" label="Username">
                           <b-input
                             v-model="signup.emailAddress"
                             type="text"
@@ -42,7 +42,7 @@
                           ></b-input>
                         </b-field>
 
-                        <b-field label="Password">
+                        <b-field class="password" label="Password">
                           <b-input
                             v-model="signup.password"
                             type="password"
