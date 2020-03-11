@@ -8,7 +8,7 @@
         <article class="row-sections">
             <div class="phone">
                 <h5>Phone Number:</h5>
-                <p><input required type="text" v-model="phone"></p>
+                <p><input class="phone-num" required type="text" v-model="phone"></p>
 
             <div class="add">
                 <br>
@@ -116,22 +116,6 @@ export default class EditAbout extends Vue {
     var aboutArray = [""];
     var keyVal = "";
 
-
-
-    // axios
-    // .get(APIConfig.buildUrl("/about"), 
-    // {headers: {	    
-    //       token: this.$store.state.userToken
-    // }
-    // })
-    // .then((response: AxiosResponse) => {
-    //   this.about = response.data;
-    // axios.post('https://texanotireshop.firebaseio.com/about.json', this.about).then(function(data){
-    //   console.log(data);
-    // });
-
-    //   this.$emit("success");
-    // })
     
 
     return axios.get('https://texanotireshop.firebaseio.com/about.json')
@@ -189,34 +173,6 @@ export default class EditAbout extends Vue {
     })
 
 
-    // axios.post('https://texanotireshop.firebaseio.com/about.json', this.about).then(function(data){
-    //   console.log(data);
-    // });
-    // console.log("saving about");
-    // axios
-    //   .put(APIConfig.buildUrl("/about/" + this.about[0].id), {
-    //     mHours: this.mon,
-    //     tHours: this.tues,
-    //     wHours: this.wed,
-    //     rHours: this.thurs,
-    //     fHours: this.fri,
-    //     saHours: this.sat,
-    //     suHours: this.sun,
-    //     phoneNumber: this.phone,
-    //     street: this.street,
-    //     city: this.city,
-    //     stateName: this.state,
-    //     zipcode: this.zipcode
-    //   })
-    //   .then((response: AxiosResponse) => {
-    //     console.log("Updated About Info");
-    //     this.about[0] = response.data;
-    //     this.$emit("success");
-    //   })
-    //   .catch((response: AxiosResponse) => {
-    //     console.log("catch");
-    //     this.error = "bad";
-    //   });
   }
 
   get isLoggedIn(): boolean {
