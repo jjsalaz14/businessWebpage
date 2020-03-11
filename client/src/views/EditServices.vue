@@ -8,15 +8,15 @@
           <h1 style="font-size:120%; font-weight:bold"><u>Add New Service</u></h1>
           <br>
           <p>Title:</p>
-          <textarea rows="2" style="width:220px" v-model="seTitle" required></textarea>
+          <textarea class="title" rows="2" style="width:220px; font-size:12px" v-model="seTitle" required></textarea>
           <br><br>
           <p>Price:</p> 
-          <textarea rows="2" style="width:220px" v-model="sePrice" required></textarea>
+          <textarea rows="2" class="price" style="width:220px" v-model="sePrice" required></textarea>
           <br><br>
           <p>Description</p>
-          <textarea rows="10" style="width:300px" v-model="seDescription" required></textarea>
+          <textarea rows="10" class="description" style="width:300px" v-model="seDescription" required></textarea>
           <br>
-          <button style="width:20%; margin-left: 240px; margin-top: 20px">Add</button>
+          <button style="width:20%; margin-left: 240px; margin-top: 20px">Add Service</button>
         </form>
       </div>
     </div>
@@ -26,14 +26,14 @@
       <h1 style="font-size:120%; font-weight:bold"><u>Current Services</u></h1>
       <br>
       <form>
-      <article v-for="(a, index) in services" v-bind:key="index">
+      <article class="servs" v-for="(a, index) in services" v-bind:key="index">
         <div class="box">
-          <button style="margin-left: 550px; " v-on:click="deleteService(a.id, index)">&times;</button>
-          <p> Title: <textarea class="service-desc" rows="1" style="width:180px"  v-model="a.seTitle" required></textarea></p>  
+          <button type="button" style="margin-left: 510px; " v-on:click="deleteService(a.id, index)">delete</button>
+          <p> Title: <textarea class="title-update" rows="1" style="width:180px"  v-model="a.seTitle" required></textarea></p>  
           <p>Price: <textarea class="service-desc" rows="1" style="width:180px" v-model="a.sePrice" required></textarea></p>
           <p>Description:</p>
-          <p><textarea class="service-desc" rows="3" style="width:550px" v-model="a.seDescription" required> </textarea></p>
-          <button style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, Number(a.sePrice), a.seDescription, index)">update</button>
+          <p><textarea class="desc-update" rows="3" style="width:550px" v-model="a.seDescription" required> </textarea></p>
+          <button type="button" style="margin-left: 500px;" v-on:click="updateService(a.id, a.seTitle, Number(a.sePrice), a.seDescription, index)">updates</button>
         </div>
       </article>
       </form>
@@ -79,24 +79,10 @@ export default class EditServices extends Vue {
       self.refreshServices();
     })
 
+  }
 
-    // axios
-    //   .post(APIConfig.buildUrl("/newservice"), {
-    //     seTitle: this.seTitle,
-    //     sePrice: this.sePrice,
-    //     seDescription: this.seDescription,
-    //   })
-    //   .then((response: AxiosResponse) => {
-    //     this.newService.push(response.data);
-    //     this.$emit("success");
-    //     this.seTitle = "";
-    //     this.sePrice = 0;
-    //     this.seDescription = "";
-    //     this.getAllServices();
-    //   })
-    //   .catch((response: AxiosResponse) => {
-    //     console.log("Error creating new deal");
-    //   });
+  getServicesLength(){
+    return this.services.length
   }
 
   created() {
@@ -137,27 +123,6 @@ export default class EditServices extends Vue {
       
     })
 
-    // axios
-    //   .get(APIConfig.buildUrl("/services"), {
-    //     headers: {
-    //       token: this.$store.state.userToken
-    //     }
-    //   })
-    //   .then((response: AxiosResponse) => {
-    //     this.services = response.data;
-    //     console.log(response.data);
-
-    //     axios.post('https://texanotireshop.firebaseio.com/services.json', this.services).then(function(data){
-    //   console.log(data);
-    //     });
-
-
-    //     this.$emit("success");
-    //   })
-    //   .catch((res: AxiosError) => {
-    //     this.error = res.response && res.response.data.error;
-    //     console.log(this.error);
-    //   });
   }
 
   refreshServices() {
@@ -194,16 +159,6 @@ export default class EditServices extends Vue {
     }
     makeRequest();
   
-        // axios
-        //   .delete(APIConfig.buildUrl("/services/" + id))
-        //   .then((response: AxiosResponse) => {
-        //     const deletedService = response.data;
-        //     this.getAllServices();
-        //     this.$emit("success");
-        //   })
-        //   .catch((response: AxiosResponse) => {
-        //     this.error = "bad";
-        //   });
   }
 
     updateService(id: number, title: string, price: number, desc: string, index: number) {
@@ -227,37 +182,6 @@ export default class EditServices extends Vue {
     });
 
     }
-
-      //     axios
-      // .put(APIConfig.buildUrl("/updateservices/" + id), {
-      //   seTitle: title,
-      //   sePrice: price,
-      //   seDescription: desc
-      // })
-      // .then((response: AxiosResponse) => {
-      //   this.services[id] = response.data;
-      //   this.$emit("success");
-      // })
-      // .catch((response: AxiosResponse) => {
-      //   console.log("catch");
-      //   this.error = "bad";
-      // })
-
-
-    // axios
-    //   .put(APIConfig.buildUrl("/updateservices/" + id), {
-    //     seTitle: title,
-    //     sePrice: price,
-    //     seDescription: desc
-    //   })
-    //   .then((response: AxiosResponse) => {
-    //     this.services[id] = response.data;
-    //     this.$emit("success");
-    //   })
-    //   .catch((response: AxiosResponse) => {
-    //     console.log("catch");
-    //     this.error = "bad";
-    //   })
 
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
