@@ -57,18 +57,18 @@
 
             <!-- Owner View -->
             <div v-if="isLoggedIn" class="margin">
-                <article v-for="(a, index) in inventory" v-bind:key="index">
+                <article class="owner-inv-list" v-for="(a, index) in inventory" v-bind:key="index">
                     <form>
                     <div class="item-box">
                         <img :src="a.image" width="200" height="200">
                         <div class="item-info">
-                            <p>Size:  <textarea class="service-desc" rows="1" style="width:200px"  v-model="a.size" required></textarea></p>
-                            <p>Brand:  <textarea class="service-desc" rows="1" style="width:186px"  v-model="a.brand" required></textarea></p>
+                            <p>Size:  <textarea class="inv-size" rows="1" style="width:200px"  v-model="a.size" required></textarea></p>
+                            <p>Brand:  <textarea class="inv-brand" rows="1" style="width:186px"  v-model="a.brand" required></textarea></p>
                             <p>Price:  <textarea class="service-desc" rows="1" style="width:193px"  v-model="a.price" required></textarea></p>
                             <p>Quantity:  <textarea class="service-desc" rows="1" style="width:166px"  v-model="a.quantity" required></textarea></p>
                             <p>{{a.category}}</p>
 
-                            <button type="button" style="margin-left: 100px; background-color: #48e319;border-radius: 12px;" v-on:click="updateInvenItem(a.size, a.brand, a.price, a.quantity, a.category, index)">Update</button>
+                            <button type="button" style="margin-left: 100px; background-color: #48e319;border-radius: 12px;" v-on:click="updateInvenItem(a.image, a.size, a.brand, a.price, a.quantity, a.category, index)">Update</button>
                             <button type="button" style="margin-left: 30px; background-color: #ff3e3e; border-radius: 12px;" v-on:click="deleteInvenItem(index)">Delete</button>
                         </div>
                     </div>
@@ -193,7 +193,7 @@ export default class Services extends Vue {
   
     }
 
-    updateInvenItem(size: string, brand: string, price: number, quantity: number, category: string, index: number ) {
+    updateInvenItem(image: string, size: string, brand: string, price: number, quantity: number, category: string, index: number ) {
       // var keyId = this.services[id-1]["key"];
       var inventoryId = this.inventory[index]["key"];
 
@@ -204,7 +204,7 @@ export default class Services extends Vue {
         price: Number(price),
         quantity: Number(quantity),
         category: category,
-        image: "NA"
+        image: image
       })
       .then(function (response) {
         console.log("Updated Item Successfully");
