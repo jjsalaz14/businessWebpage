@@ -1,0 +1,27 @@
+Set Up and Run Environment
+
+Setup
+1)	Open a terminal
+2)	Install NPM and Git
+3)	Navigate to any directory and type: clone git https://github.com/jjsalaz14/businessWebpage.git
+4)	cd into that directory
+5)	Run npm install in the /client directory
+6)	In the /client directory run npm run serve
+7)	In your internet browser, navigate to localhost:8080
+Set Up Firebase
+1)	Open a terminal and navigate to the directory
+2)	npm install -g firebase-tools
+3)	Sign in to Google: firebase login
+4)	Initiate Project: firebase init
+5)	Deploy Your Website: firebase deploy
+Login Info
+Username: admin
+Password: password
+
+
+How to Run Tests:
+
+1)	cd into the /client folder
+2)	run npm run test:e2e
+3)	In Cypress select Chrome 80
+4)	Click Run all specs
