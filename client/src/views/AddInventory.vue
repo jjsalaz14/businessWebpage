@@ -9,21 +9,21 @@
           <div class="left-side">
             <br>
             <p>Size:</p>
-            <textarea rows="2" style="width:220px" placeholder="Ex. 215/60R16" v-model="size" required></textarea>
+            <textarea class="inven-size" rows="2" style="width:220px" placeholder="Ex. 215/60R16" v-model="size" required></textarea>
             <br>
             <p>Brand:</p> 
-            <textarea rows="2" style="width:220px" v-model="brand" required></textarea>
+            <textarea class="inven-brand" rows="2" style="width:220px" v-model="brand" required></textarea>
             <br>
             <p>Unit Price:</p> 
-            <textarea rows="2" style="width:220px" v-model="price" required></textarea>
+            <textarea class="inven-price" rows="2" style="width:220px" v-model="price" required></textarea>
             <br>
           </div>
           <div class="right-side">
             <p>Quantity:</p> 
-            <textarea rows="2" style="width:220px" v-model="quantity" required></textarea>
+            <textarea class="inven-quantity" rows="2" style="width:220px" v-model="quantity" required></textarea>
             <br>
             <p>Image Url:</p> 
-            <textarea rows="2" style="width:220px" v-model="image" required></textarea>
+            <textarea class="inven-url" rows="2" style="width:220px" v-model="image" required></textarea>
             <br>
             <!-- <v-btn raised @click="onPickFile">Upload Image </v-btn> -->
             <!-- <input type="file" 
@@ -31,7 +31,7 @@
                     @change="onFilePicked($event)"> -->
             <!-- <img src="imageUrl" height="150"> -->
             <p>Category:</p> 
-            <select required v-model="category">
+            <select class="inven-category" required v-model="category">
               <option disabled value="">Select Item Category</option>
               <option>New</option>
               <option>Used</option>
@@ -39,7 +39,7 @@
             </select>
             
           </div>
-          <button style="background-color: #5b8ff6; border-radius: 12px; width:10%; margin-left: 330px; margin-top: 20px">Add</button>
+          <button class="add-button" style="background-color: #5b8ff6; border-radius: 12px; width:10%; margin-left: 330px; margin-top: 20px">Add</button>
         </form>
       </div>
   </div>
