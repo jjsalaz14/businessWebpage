@@ -8,15 +8,15 @@
           <h1 style="font-size:120%; font-weight:bold"><u>Add New Deal</u></h1>
           <br>
           <p>Title:</p>
-          <textarea rows="2" style="width:220px" v-model="title" required></textarea>
+          <textarea class="add-title" rows="2" style="width:220px" v-model="title" required></textarea>
           <br><br>
           <p>Expiration Date:</p> 
-          <textarea rows="2" style="width:220px" v-model="expiration" required></textarea>
+          <textarea class="add-exp" rows="2" style="width:220px" v-model="expiration" required></textarea>
           <br><br>
           <p>Detailed Information:</p>
-          <textarea rows="10" style="width:300px" v-model="description" required></textarea>
+          <textarea class="add-detail" rows="10" style="width:300px" v-model="description" required></textarea>
           <br>
-          <button style="width:10%; margin-left: 255px; margin-top: 20px">Add</button>
+          <button class="add-button" style="width:10%; margin-left: 255px; margin-top: 20px">Add</button>
         </form>
       </div>
   </div>
@@ -24,9 +24,9 @@
     <div class="deals-list">
       <h1 style="font-size:120%; font-weight:bold"><u>Current Deals</u></h1>
       <br>
-      <article v-for="(a, index) in deals" v-bind:key="index">
+      <article class="deals-list-info" v-for="(a, index) in deals" v-bind:key="index">
         <div class="box">
-           <button style="margin-left: 550px; " v-on:click="deleteDeal(a.id, index)">&times;</button>
+           <button style="margin-left: 530px; " v-on:click="deleteDeal(a.id, index)">delete</button>
           <p> <u>{{a.title}}</u>:  Good Before: {{a.expiration}}</p>
           <p> {{a.description}} </p>
         </div>
