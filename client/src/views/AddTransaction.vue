@@ -10,21 +10,21 @@
                         <br>
                         <p v-if="error" style="color:red">{{errorMsg}}</p>
                         <p>Type:</p> 
-                        <select required v-model="category">
+                        <select class="trans-type" required v-model="category">
                             <option disabled value="">Select Type Of Transaction</option>
                             <option>Expense</option>
                             <option>Revenue</option>
                         </select>
                         <br>
                         <p>Amount:</p>
-                        <textarea rows="2" style="width:220px" v-model="amount" required></textarea>
+                        <textarea class="trans-amount" rows="2" style="width:220px" v-model="amount" required></textarea>
                         <br>
                         <p>Quantity:</p> 
-                        <textarea rows="2" style="width:220px" v-model="quantity" required></textarea>
+                        <textarea class="trans-quantity" rows="2" style="width:220px" v-model="quantity" required></textarea>
                         <br>
                         <p>Add A Description:</p>
                         <p>(Or Select Services)</p>
-                        <textarea rows="10" style="width:300px" v-model="description" required></textarea>
+                        <textarea class="trans-desc" rows="10" style="width:300px" v-model="description" required></textarea>
                         <br>
                         <select  v-model="description">
                             <option disabled value="">Select Service</option>
