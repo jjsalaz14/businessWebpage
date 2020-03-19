@@ -25,3 +25,7 @@ How to Run Tests:
 2)	run npm run test:e2e
 3)	In Cypress select Chrome 80
 4)	Click Run all specs
+
+
+Link to website:
+https://texanotireshop.firebaseapp.com/
